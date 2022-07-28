@@ -4,17 +4,31 @@ import numpy as np
 import matplotlib.pyplot as plt
 from optitrack.geometry import *
 
+
 ###----- INITIALIZATION ------###
+#
+# get choosed joint
+#
+def get_joints(array, joints, legend):
+    tmp = []
+    legend_f = []
+    for i in range(0, len(joints)):
+        if joints[i] == True:
+            tmp.append(array[i])
+            legend_f.append(legend[i])
+    return tmp, legend_f
 
 def get_bone_pos(bodies, take):
 #
 # Get the marker positions from the bodies and the time stamp
 #
     bones_pos = []
+    b = [0, 13, 14, 15, 16, 17, 18, 19, 20]
     if len(bodies) > 0:
         for body in bodies: 
             bones = take.rigid_bodies[body]
             bones_pos.append(bones.positions)   # take position of each body part
+    bones_pos = [ bones_pos[i] for i in b]
     return bones_pos
 
 def get_marker_path(bones_pos, marker, take):
@@ -36,16 +50,17 @@ def get_marker_path(bones_pos, marker, take):
 
 ###----- PATH PLOT ------###
 
-def plot_marker_path_2D(marker_pos, plot = "xy"):
+def plot_marker_path_2D(marker_pos, ax, frame, plot = "xy"):
 #
 #   plot marker path on planes: "xy" - "xz" - "yz"
-#
+#   
+    start = 100
     if plot == "xz":
-        plt.plot(marker_pos[0], marker_pos[2])
+        ax.plot(marker_pos[0][start:frame], marker_pos[2][start:frame])
     if plot == "yz":
-        plt.plot(marker_pos[1], marker_pos[2])
+        ax.plot(marker_pos[1][start:frame], marker_pos[2][start:frame])
     if plot == "xy":
-        plt.plot(marker_pos[0], marker_pos[1])
+        ax.plot(marker_pos[0][start:frame], marker_pos[1][start:frame])
 
 
 def plot_marker_path_3D(marker_pos, ax, frame = "none"):
@@ -63,17 +78,26 @@ def plot_marker_path_3D(marker_pos, ax, frame = "none"):
 
 ###----- TRAJECTORY PLOT ------###
 
-def plot_marker_traj(marker_pos, t, plot = "x"):
+def plot_marker_traj(marker_pos, t, ax, frame, label = "x", reverse_axis = False):
 #
 #   plot axle trajectory:
 #   "x" = x- direction
 #   "y" = y- direction
 #   "z" = z- direction
 #
-    if plot=="x":
-        plt.plot(t, marker_pos[0])
-    if plot=="y":
-        plt.plot(t, marker_pos[1])
-    if plot=="z":
-        plt.plot(t, marker_pos[2])   
+    start = 100
+    if reverse_axis:
+        if label=="x":
+            ax.plot(marker_pos[0][start:frame], t[start:frame])
+        if label=="y":
+            ax.plot(marker_pos[1][start:frame], t[start:frame])
+        if label=="z":
+            ax.plot(marker_pos[2][start:frame], t[start:frame])  
+    else:
+        if label=="x":
+            ax.plot(t[start:frame], marker_pos[0][start:frame])
+        if label=="y":
+            ax.plot(t[start:frame], marker_pos[1][start:frame])
+        if label=="z":
+            ax.plot(t[start:frame], marker_pos[2][start:frame]) 
       

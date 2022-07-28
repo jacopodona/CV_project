@@ -1,0 +1,236 @@
+<BackgroundColor@Widget>
+    background_color: 1, 1, 1, 1
+    canvas.before:
+        Color:
+            rgba: root.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<BackgroundLabel@Label+BackgroundColor>
+    background_color: (1, 237/255, 237/255, 1)
+    color: (0, 0, 0, 1)
+    bold: True
+    markup: True
+
+<MyLayout>
+    id: my_widget
+    do_default_tab: False
+    tab_pos: "top_mid"
+
+    # Choose file window
+    TabbedPanelItem:
+        text: "Load Data"
+        BoxLayout:
+            orientation: "vertical"
+            FileChooserListView:
+                id: filechooser
+                on_selection: my_widget.selected(filechooser.selection)
+            
+            GridLayout:
+                cols: 2
+                padding: 20
+                spacing: 20
+                BoxLayout:
+                    padding: 20
+                    spacing: 20
+                    orientation: "vertical"
+                    BackgroundLabel:
+                        text: "Choose .CSV files"
+                        size_hint: .3, .4
+                        font_size: 25
+                        pos_hint: {"center_x": .5}
+                    Button:
+                        text: "Load data"
+                        size_hint: .3, .3
+                        font_size: 20
+                        pos_hint: {"center_x": .5}
+                        on_release: root.load_data()
+                    Button:
+                        text: "Clear data"
+                        size_hint: .3, .3
+                        font_size: 20
+                        pos_hint: {"center_x": .5}
+                        on_release: root.clear_data()
+                BoxLayout:
+                    orientation: "vertical"
+                    id: load_data_label
+
+    # 2D window
+    TabbedPanelItem:
+        text: "2D"
+        GridLayout:
+            cols: 3
+            rows: 3
+            size: root.width, root.height
+            padding_bottom: 20
+            padding: 10
+            spacing: 10
+            BoxLayout:
+                id: graph_y
+
+            BoxLayout:
+                id: graph_xyz
+
+            BoxLayout:
+                id: graph_z
+
+            BoxLayout:
+                orientation: "vertical"
+                GridLayout:
+                    cols: 2
+                    rows: 1
+                    size_hint: 1, .1
+                    BackgroundLabel:
+                        text: "Change  path length"
+                        font_size: 20
+                    Slider:
+                        id: slider
+                        min: 1
+                        max: 1000
+                        step: 1
+                        orientation: "horizontal"
+                        value: self.max
+                        on_value: root.slide_it(*args)
+
+                GridLayout:
+                    id: file_manager
+                    size_hint: 1, .3
+                    cols: 3
+                    rows: 3
+                    spacing: 7
+                    padding: 20
+
+                GridLayout:
+                    cols: 2
+                    rows: 2
+                    size: root.width, root.height
+                    spacing: 10
+                    padding: 10
+                    size_hint: 1, .4
+                    Button:
+                        id: auto_update_label
+                        markup: True
+                        text: "[b]Enable auto-update[/b]"
+                        on_release: root.auto_update()
+                        pos_hint: {"center_x": 50}
+                        
+                    Button:
+                        id: save_plot
+                        markup: True
+                        text: "[b]Save plots[/b]"
+                        on_release: root.save_plts()
+                        pos_hint: {"center_x": 50}
+
+                    Spinner:
+                        id: multiple_choice
+                        markup: True
+                        text: "Choose the plot"
+                        values: ["[b]Plot X-Z[/b]", "[b]Plot X-Y[/b]", "[b]Plot Y-Z[/b]"]
+
+                    GridLayout:
+                        cols: 2
+                        rows: 1
+                        Button:
+                            markup: True
+                            id: multi_graph
+                            text: "[b]Enable multiple\nfile joint[/b]"
+                            on_release: root.multi_graph()
+                        
+                        Spinner:
+                            id: spinner_joint
+                            markup: True
+                            text: "[b]Joint[/b]"
+                            disabled: True
+                        
+                
+            BoxLayout:
+                id: graph_x
+                
+            #Chosing part
+            BoxLayout:
+                orientation: "vertical"
+                BackgroundLabel:
+                    text: "Choose body parts"
+                    font_size: 32
+                    size_hint: (1, .4)
+                    pos_hint: {"top": .1}
+
+                #Bones
+                GridLayout:
+                    size: root.width, root.height
+                    cols: 6
+                    rows: 3
+                    padding: 5
+                    BackgroundLabel:
+                        id: hip_text
+                        text: "Hip"
+                    CheckBox:
+                        id: hip_check
+                    BackgroundLabel:
+                        id: l_thigh_text
+                        text: "Left thigh"
+                    CheckBox:
+                        id: l_thigh_check
+                    BackgroundLabel:
+                        id: l_shin_text
+                        text: "Left shin"
+                    CheckBox:
+                        id: l_shin_check
+                    BackgroundLabel:
+                        id: l_foot_text
+                        text: "Left foot"
+                    CheckBox:
+                        id: l_foot_check
+                    BackgroundLabel:
+                        id: r_thigh_text
+                        text: "Right thigh"
+                    CheckBox:
+                        id: r_thigh_check
+                    BackgroundLabel:
+                        id: r_shin_text
+                        text: "Right shin"
+                    CheckBox:
+                        id: r_shin_check
+                    BackgroundLabel:
+                        id: r_foot_text
+                        text: "Right foot"
+                    CheckBox:
+                        id: r_foot_check
+                    BackgroundLabel:
+                        id: l_toe_text
+                        text: "Left toe"
+                    CheckBox:
+                        id: l_toe_check
+                    BackgroundLabel:
+                        id: r_toe_text
+                        text: "Right toe"
+                    CheckBox:
+                        id: r_toe_check 
+
+                #Botton
+                BoxLayout:
+                    orientation: "horizontal"
+                    size: root.width, root.height
+                    spacing: 10
+                    padding: 10
+                    size_hint: 1, .3
+                    Button:
+                        markup: True
+                        text: "[b]Plot[/b]"
+                        on_release: root.plot_all()
+                        pos_hint: {"center_x": 50}
+                        
+                    Button:
+                        id: button_sel
+                        markup: True
+                        text: "[b]Check all[/b]"
+                        on_release: root.select_all()
+                        pos_hint: {"center_x": 50}
+
+    # 3D window
+    TabbedPanelItem:
+        text: "3D"
+        
+
+        
