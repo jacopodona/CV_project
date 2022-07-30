@@ -71,7 +71,7 @@ def plot_marker_path_3D(marker_pos, ax, frame = "none"):
     if frame == "none":
         frame = len(marker_pos[0])
     if frame <= len(marker_pos[0]):
-        ax.plot3D(marker_pos[0][0:frame],marker_pos[1][0:frame], marker_pos[2][0:frame])
+        ax.plot3D(marker_pos[0][0:frame],marker_pos[1][0:frame], marker_pos[2][0:frame])#x,y,z
     else:
         print("frame selected out of bound, max number is: ", len(marker_pos[0]))
         
