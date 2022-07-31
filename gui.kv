@@ -323,22 +323,87 @@
         text: "3D"
         GridLayout:
             cols: 2
-            rows: 1
-            Button:
-                text: "graph placeholder"
+            rows: 2
+            BoxLayout:
+                id: graph_3d
         
+            #Chosing part
             BoxLayout:
                 orientation: "vertical"
+                BackgroundLabel:
+                    text: "Choose body parts"
+                    font_size: 32
+                    size_hint: (1, .4)
+                    pos_hint: {"top": .1}
 
-                Button:
-                    text: "start simulation"
-            
-                Label:
-                    text: "select the max frame"
+                #Bones
+                GridLayout:
+                    size: root.width, root.height
+                    cols: 6
+                    rows: 3
+                    padding: 5
+                    BackgroundLabel:
+                        id: hip_text_3d
+                        text: "Hip"
+                    CheckBox:
+                        id: hip_check_3d
+                    BackgroundLabel:
+                        id: l_thigh_text_3d
+                        text: "Left thigh"
+                    CheckBox:
+                        id: l_thigh_check_3d
+                    BackgroundLabel:
+                        id: l_shin_text_3d
+                        text: "Left shin"
+                    CheckBox:
+                        id: l_shin_check_3d
+                    BackgroundLabel:
+                        id: l_foot_text_3d
+                        text: "Left foot"
+                    CheckBox:
+                        id: l_foot_check_3d
+                    BackgroundLabel:
+                        id: r_thigh_text_3d
+                        text: "Right thigh"
+                    CheckBox:
+                        id: r_thigh_check_3d
+                    BackgroundLabel:
+                        id: r_shin_text_3d
+                        text: "Right shin"
+                    CheckBox:
+                        id: r_shin_check_3d
+                    BackgroundLabel:
+                        id: r_foot_text_3d
+                        text: "Right foot"
+                    CheckBox:
+                        id: r_foot_check_3d
+                    BackgroundLabel:
+                        id: l_toe_text_3d
+                        text: "Left toe"
+                    CheckBox:
+                        id: l_toe_check_3d
+                    BackgroundLabel:
+                        id: r_toe_text_3d
+                        text: "Right toe"
+                    CheckBox:
+                        id: r_toe_check_3d
 
-                Slider:
-                    min:1
-                    max:1000
-        
+                #Botton
+                BoxLayout:
+                    orientation: "horizontal"
+                    size: root.width, root.height
+                    spacing: 10
+                    padding: 10
+                    size_hint: 1, .3
+                    Button:
+                        markup: True
+                        text: "[b]Plot[/b]"
+                        on_release: root.plot_3d()
+                        pos_hint: {"center_x": 50}
 
-        
+                    Button:
+                        id: button_sel_3d
+                        markup: True
+                        text: "[b]Check all[/b]"
+                        on_release: root.select_all_3d()
+                        pos_hint: {"center_x": 50}

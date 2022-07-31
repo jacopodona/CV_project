@@ -31,6 +31,17 @@ def get_bone_pos(bodies, take):
     bones_pos = [ bones_pos[i] for i in b]
     return bones_pos
 
+def old_get_bone_pos(bodies, take):
+#
+# Get the marker positions from the bodies and the time stamp
+#
+    bones_pos = []
+    if len(bodies) > 0:
+        for body in bodies:
+            bones = take.rigid_bodies[body]
+            bones_pos.append(bones.positions)   # take position of each body part
+    return bones_pos
+
 def get_marker_path(bones_pos, marker, take):
 #
 # take the positions of all the marker and

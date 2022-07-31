@@ -18,7 +18,6 @@ from optitrack.plot import *
 import optitrack.csv_reader as csv
 from optitrack.geometry import *
 
-#prova github
 ## Find the files
 # run
 dir = os.path.dirname(__file__)
@@ -27,11 +26,6 @@ run_2 = os.path.join(dir, 'data/edoardo_corsa.csv')
 run_3 = os.path.join(dir, 'data/vittoria_corsa.csv')
 run_4 = os.path.join(dir, 'data/sgamb_corsa.csv')
 run_5 = os.path.join(dir, 'data/forna_corsa_001.csv')
-#run_1 = "/home/mmlab/Desktop/CVLaboratories/CV_project/data/Dona_corsa.csv"
-#run_2 = "/home/mmlab/Desktop/CVLaboratories/CV_project/data/edoardo_corsa.csv"
-#run_3 = "/home/mmlab/Desktop/CVLaboratories/CV_project/data/vittoria_corsa.csv"
-#run_4 = "/home/mmlab/Desktop/CVLaboratories/CV_project/data/sgamb_corsa.csv"
-#run_5 = "/home/mmlab/Desktop/CVLaboratories/CV_project/data/forna_corsa_001.csv"
 
 # walk
 walk_1 = os.path.join(dir, 'data/Dona_camminata.csv')
@@ -39,11 +33,6 @@ walk_2 = os.path.join(dir, 'data/edoardo_camminata.csv')
 walk_3 = os.path.join(dir, 'data/vittoria_camminata.csv')
 walk_4 = os.path.join(dir, 'data/sgamb_camminata.csv')
 walk_5 = os.path.join(dir, 'data/forna_camminata.csv')
-#walk_1 = "/home/mmlab/Desktop/CVLaboratories/CV_project/data/Dona_camminata.csv"
-#walk_2 = "/home/mmlab/Desktop/CVLaboratories/CV_project/data/edoardo_camminata.csv"
-#walk_3 = "/home/mmlab/Desktop/CVLaboratories/CV_project/data/vittoria_camminata.csv"
-#walk_4 = "/home/mmlab/Desktop/CVLaboratories/CV_project/data/sgamb_camminata.csv"
-#walk_5 = "/home/mmlab/Desktop/CVLaboratories/CV_project/data/forna_camminata.csv"
 
 ## Read the files
 # run
