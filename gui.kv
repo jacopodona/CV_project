@@ -100,6 +100,96 @@
                     rows: 3
                     spacing: 7
                     padding: 20
+                    Button:
+                        id: f_label_zero
+                        text: " "
+                        size_hint: None, None
+                        font_size: 15
+                        height: 40
+                        width: 180
+                        background_color: (1, 237/255, 237/255, 1)
+                        disabled: True
+                        on_release: root.choose_file(0)
+                    Button:
+                        id: f_label_one
+                        text: " "
+                        size_hint: None, None
+                        font_size: 15
+                        height: 40
+                        width: 180
+                        background_color: (1, 237/255, 237/255, 1)
+                        disabled: True
+                        on_release: root.choose_file(1)
+                    Button:
+                        id: f_label_two
+                        text: " "
+                        size_hint: None, None
+                        font_size: 15
+                        height: 40
+                        width: 180
+                        background_color: (1, 237/255, 237/255, 1)
+                        disabled: True
+                        on_release: root.choose_file(2)
+                    Button:
+                        id: f_label_three
+                        text: " "
+                        size_hint: None, None
+                        font_size: 15
+                        height: 40
+                        width: 180
+                        background_color: (1, 237/255, 237/255, 1)
+                        disabled: True
+                        on_release: root.choose_file(3)
+                    Button:
+                        id: f_label_four
+                        text: " "
+                        size_hint: None, None
+                        font_size: 15
+                        height: 40
+                        width: 180
+                        background_color: (1, 237/255, 237/255, 1)
+                        disabled: True
+                        on_release: root.choose_file(4)
+                    Button:
+                        id: f_label_five
+                        text: " "
+                        size_hint: None, None
+                        font_size: 15
+                        height: 40
+                        width: 180
+                        background_color: (1, 237/255, 237/255, 1)
+                        disabled: True
+                        on_release: root.choose_file(5)
+                    Button:
+                        id: f_label_six
+                        text: " "
+                        size_hint: None, None
+                        font_size: 15
+                        height: 40
+                        width: 180
+                        background_color: (1, 237/255, 237/255, 1)
+                        disabled: True
+                        on_release: root.choose_file(6)
+                    Button:
+                        id: f_label_sev
+                        text: " "
+                        size_hint: None, None
+                        font_size: 15
+                        height: 40
+                        width: 180
+                        background_color: (1, 237/255, 237/255, 1)
+                        disabled: True
+                        on_release: root.choose_file(7)
+                    Button:
+                        id: f_label_eigth
+                        text: " "
+                        size_hint: None, None
+                        font_size: 15
+                        height: 40
+                        width: 180
+                        background_color: (1, 237/255, 237/255, 1)
+                        disabled: True
+                        on_release: root.choose_file(8)
 
                 GridLayout:
                     cols: 2
@@ -126,7 +216,7 @@
                         id: multiple_choice
                         markup: True
                         text: "Choose the plot"
-                        values: ["[b]Plot X-Z[/b]", "[b]Plot X-Y[/b]", "[b]Plot Y-Z[/b]"]
+                        values: ["Plot X-Z", "Plot X-Y", "Plot Y-Z"]
 
                     GridLayout:
                         cols: 2
@@ -231,10 +321,24 @@
     # 3D window
     TabbedPanelItem:
         text: "3D"
+        GridLayout:
+            cols: 2
+            rows: 1
+            Button:
+                text: "graph placeholder"
+        
+            BoxLayout:
+                orientation: "vertical"
 
+                Button:
+                    text: "start simulation"
+            
+                Label:
+                    text: "select the max frame"
 
-    # Animation
-    TabbedPanelItem:
-        text: "Animation"
+                Slider:
+                    min:1
+                    max:1000
+        
 
         

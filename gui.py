@@ -35,10 +35,14 @@ class MyLayout(TabbedPanel):
     slider = False
     save_plt = False
     file_name = ""
+    file_name_array = []
     data_path = []
+    data_path_sel = []
     my_path = os.path.dirname(__file__)
     color_count = 0
+    n_file = 0
 
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.ids.spinner_joint.values = MyLayout.legend
@@ -50,9 +54,101 @@ class MyLayout(TabbedPanel):
             MyLayout.file_name = file_path[0]
 
 
+    def choose_file(self, number):
+        if MyLayout.data_path:
+            if self.ids.multi_graph.text == "[b]Enable multiple\nfile joint[/b]":
+                MyLayout.n_file = number
+                if number == 0:
+                    MyLayout.set_file_color_to_std(self)
+                    self.ids.f_label_zero.background_color[3] = 0.4
+                if number == 1:
+                    MyLayout.set_file_color_to_std(self)
+                    self.ids.f_label_one.background_color[3] = 0.4
+                if number == 2:
+                    MyLayout.set_file_color_to_std(self)
+                    self.ids.f_label_two.background_color[3] = 0.4
+                if number == 3:
+                    MyLayout.set_file_color_to_std(self)
+                    self.ids.f_label_three.background_color[3] = 0.4
+                if number == 4:
+                    MyLayout.set_file_color_to_std(self)
+                    self.ids.f_label_four.background_color[3] = 0.4
+                if number == 5:
+                    MyLayout.set_file_color_to_std(self)
+                    self.ids.f_label_five.background_color[3] = 0.4
+                if number == 6:
+                    MyLayout.set_file_color_to_std(self)
+                    self.ids.f_label_six.background_color[3] = 0.4
+                if number == 7:
+                    MyLayout.set_file_color_to_std(self)
+                    self.ids.f_label_sev.background_color[3] = 0.4
+                if number == 8:
+                    MyLayout.set_file_color_to_std(self)
+                    self.ids.f_label_eigth.background_color[3] = 0.4
+
+            if self.ids.multi_graph.text == "[b]Disable multiple\nfile joint[/b]":
+                if number == 0 and self.ids.f_label_zero.background_color[3] == 1:
+                    self.ids.f_label_zero.background_color[3] = 0.4
+                    return
+                if number == 0 and self.ids.f_label_zero.background_color[3] == 0.4:
+                    self.ids.f_label_zero.background_color[3] = 1
+                if number == 1 and self.ids.f_label_one.background_color[3] == 1:
+                    self.ids.f_label_one.background_color[3] = 0.4
+                    return
+                if number == 1 and self.ids.f_label_one.background_color[3] == 0.4:
+                    self.ids.f_label_one.background_color[3] = 1
+                if number == 2 and self.ids.f_label_two.background_color[3] == 1:
+                    self.ids.f_label_two.background_color[3] = 0.4
+                    return
+                if number == 2 and self.ids.f_label_two.background_color[3] == 0.4:
+                    self.ids.f_label_two.background_color[3] = 1
+                if number == 3 and self.ids.f_label_three.background_color[3] == 1:
+                    self.ids.f_label_three.background_color[3] = 0.4
+                    return
+                if number == 3 and self.ids.f_label_three.background_color[3] == 0.4:
+                    self.ids.f_label_three.background_color[3] = 1
+                if number == 4 and self.ids.f_label_four.background_color[3] == 1:
+                    self.ids.f_label_four.background_color[3] = 0.4
+                    return
+                if number == 4 and self.ids.f_label_four.background_color[3] == 0.4:
+                    self.ids.f_label_four.background_color[3] = 1
+                if number == 5 and self.ids.f_label_five.background_color[3] == 1:
+                    self.ids.f_label_five.background_color[3] = 0.4
+                    return
+                if number == 5 and self.ids.f_label_five.background_color[3] == 0.4:
+                    self.ids.f_label_five.background_color[3] = 1
+                if number == 6 and self.ids.f_label_six.background_color[3] == 1:
+                    self.ids.f_label_six.background_color[3] = 0.4
+                    return
+                if number == 6 and self.ids.f_label_six.background_color[3] == 0.4:
+                    self.ids.f_label_six.background_color[3] = 1
+                if number == 7 and self.ids.f_label_sev.background_color[3] == 1:
+                    self.ids.f_label_sev.background_color[3] = 0.4
+                    return
+                if number == 7 and self.ids.f_label_sev.background_color[3] == 0.4:
+                    self.ids.f_label_sev.background_color[3] = 1
+                if number == 8 and self.ids.f_label_eigth.background_color[3] == 1:
+                    self.ids.f_label_eigth.background_color[3] = 0.4
+                    return
+                if number == 8 and self.ids.f_label_eigth.background_color[3] == 0.4:
+                    self.ids.f_label_eigth.background_color[3] = 1
+
+
+    def set_file_color_to_std(self):
+        self.ids.f_label_zero.background_color[3] = 1
+        self.ids.f_label_one.background_color[3] = 1
+        self.ids.f_label_two.background_color[3] = 1
+        self.ids.f_label_three.background_color[3] = 1
+        self.ids.f_label_four.background_color[3] = 1
+        self.ids.f_label_five.background_color[3] = 1
+        self.ids.f_label_six.background_color[3] = 1
+        self.ids.f_label_sev.background_color[3] = 1
+        self.ids.f_label_eigth.background_color[3] = 1
+            
+
     def multi_graph(self):
-        if self.ids.multi_graph.text == "[b]Enable multiple\nfilejoint[/b]":
-            self.ids.multi_graph.text = "[b]Disable multiple\nfilejoint[/b]"
+        if self.ids.multi_graph.text == "[b]Enable multiple\nfile joint[/b]":
+            self.ids.multi_graph.text = "[b]Disable multiple\nfile joint[/b]"
             self.ids.hip_check.disabled = True
             self.ids.l_thigh_check.disabled = True
             self.ids.l_shin_check.disabled = True
@@ -66,7 +162,7 @@ class MyLayout(TabbedPanel):
             self.ids.button_sel.disabled = True
 
         else:
-            self.ids.multi_graph.text = "[b]Enable multiple\nfilejoint[/b]"
+            self.ids.multi_graph.text = "[b]Enable multiple\nfile joint[/b]"
             self.ids.hip_check.disabled = False
             self.ids.l_thigh_check.disabled = False
             self.ids.l_shin_check.disabled = False
@@ -78,30 +174,107 @@ class MyLayout(TabbedPanel):
             self.ids.r_toe_check.disabled = False
             self.ids.spinner_joint.disabled = True
             self.ids.button_sel.disabled = False
- 
+        MyLayout.set_file_color_to_std(self)
+
 
     def load_data(self):
         if MyLayout.file_name not in MyLayout.data_path and ".csv" in MyLayout.file_name:
             self.ids.load_data_label.add_widget(Label(text =  os.path.basename(MyLayout.file_name),
                                                         font_size = 20))
             MyLayout.data_path.append(MyLayout.file_name)
+            
+            pr = True
+            # Set name of file
+            if self.ids.f_label_zero.disabled and pr == True:
+                self.ids.f_label_zero.disabled = False
+                self.ids.f_label_zero.text = os.path.basename(MyLayout.file_name)
+                self.ids.f_label_zero.background_color = colors[MyLayout.color_count]
+                pr = False
+            if self.ids.f_label_one.disabled and pr == True:
+                self.ids.f_label_one.disabled = False
+                self.ids.f_label_one.text = os.path.basename(MyLayout.file_name)
+                self.ids.f_label_one.background_color = colors[MyLayout.color_count]
+                pr = False
+            if self.ids.f_label_two.disabled and pr == True:
+                self.ids.f_label_two.disabled = False
+                self.ids.f_label_two.text = os.path.basename(MyLayout.file_name)
+                self.ids.f_label_two.background_color = colors[MyLayout.color_count]
+                pr = False
+            if self.ids.f_label_three.disabled and pr == True:
+                self.ids.f_label_three.disabled = False
+                self.ids.f_label_three.text = os.path.basename(MyLayout.file_name)
+                self.ids.f_label_three.background_color = colors[MyLayout.color_count]
+                pr = False
+            if self.ids.f_label_four.disabled and pr == True:
+                self.ids.f_label_four.disabled = False
+                self.ids.f_label_four.text = os.path.basename(MyLayout.file_name)
+                self.ids.f_label_four.background_color = colors[MyLayout.color_count]
+                pr = False
+            if self.ids.f_label_five.disabled and pr == True:
+                self.ids.f_label_five.disabled = False
+                self.ids.f_label_five.text = os.path.basename(MyLayout.file_name)
+                self.ids.f_label_five.background_color = colors[MyLayout.color_count]
+                pr = False
+            if self.ids.f_label_six.disabled and pr == True:
+                self.ids.f_label_six.disabled = False
+                self.ids.f_label_six.text = os.path.basename(MyLayout.file_name)
+                self.ids.f_label_six.background_color = colors[MyLayout.color_count]
+                pr = False
+            if self.ids.f_label_sev.disabled and pr == True:
+                self.ids.f_label_sev.disabled = False
+                self.ids.f_label_sev.text = os.path.basename(MyLayout.file_name)
+                self.ids.f_label_sev.background_color = colors[MyLayout.color_count]
+                pr = False
+            if self.ids.f_label_eigth.disabled and pr == True:
+                self.ids.f_label_eigth.disabled = False
+                self.ids.f_label_eigth.text = os.path.basename(MyLayout.file_name)
+                self.ids.f_label_eigth.background_color = colors[MyLayout.color_count]
+                pr = False
 
-            self.ids.file_manager.add_widget(Button(text = os.path.basename(MyLayout.file_name),
-                                                    size_hint = (None, None),
-                                                    font_size = 15,
-                                                    height = 40,
-                                                    width = 180,
-                                                    background_color = colors[MyLayout.color_count]
-                                                    ))
             MyLayout.color_count += 1             
 
 
     def clear_data(self):
         self.ids.load_data_label.clear_widgets()
         del MyLayout.data_path[:]
-        self.ids.file_manager.clear_widgets()
+        self.ids.graph_x.clear_widgets()
+        self.ids.graph_y.clear_widgets()
+        self.ids.graph_z.clear_widgets()
+        self.ids.graph_xyz.clear_widgets()
+
+        # self.ids.file_manager.clear_widgets()
         MyLayout.color_count = 0
 
+        self.ids.f_label_zero.background_color = (1, 237/255, 237/255, 1)
+        self.ids.f_label_one.background_color = (1, 237/255, 237/255, 1)       
+        self.ids.f_label_two.background_color = (1, 237/255, 237/255, 1)
+        self.ids.f_label_three.background_color = (1, 237/255, 237/255, 1)
+        self.ids.f_label_four.background_color = (1, 237/255, 237/255, 1)
+        self.ids.f_label_five.background_color = (1, 237/255, 237/255, 1)
+        self.ids.f_label_six.background_color = (1, 237/255, 237/255, 1)
+        self.ids.f_label_sev.background_color = (1, 237/255, 237/255, 1)
+        self.ids.f_label_eigth.background_color = (1, 237/255, 237/255, 1)
+        
+        self.ids.f_label_zero.text = " "
+        self.ids.f_label_one.text = " "
+        self.ids.f_label_two.text = " "
+        self.ids.f_label_three.text = " "
+        self.ids.f_label_four.text = " "
+        self.ids.f_label_five.text = " "
+        self.ids.f_label_six.text = " "
+        self.ids.f_label_sev.text = " "
+        self.ids.f_label_eigth.text = " "
+        
+        self.ids.f_label_zero.disabled = True
+        self.ids.f_label_one.disabled = True
+        self.ids.f_label_two.disabled = True
+        self.ids.f_label_three.disabled = True
+        self.ids.f_label_four.disabled = True
+        self.ids.f_label_five.disabled = True
+        self.ids.f_label_six.disabled = True
+        self.ids.f_label_sev.disabled = True
+        self.ids.f_label_eigth.disabled = True
+        
 
     def select_all(self):
         if self.ids.button_sel.text == "[b]Check all[/b]":
@@ -128,10 +301,64 @@ class MyLayout(TabbedPanel):
             self.ids.button_sel.text = "[b]Check all[/b]"
 
 
-    def plot_all(self):
-        if self.ids.multi_graph.text == "[b]Enable multiple\nfile joint[/b]":
+    def select_data_path_from_file(self):
+        count = 0
+        color = []
+        if self.ids.f_label_zero.background_color[3] == 0.4:
+            MyLayout.data_path_sel.append(MyLayout.data_path[count])
+            color.append(colors[0])
+        count += 1
+            
+        if self.ids.f_label_one.background_color[3] == 0.4:
+            MyLayout.data_path_sel.append(MyLayout.data_path[count])
+            color.append(colors[1])
+        count += 1
 
-            joints = [self.ids.hip_check.active,
+        if self.ids.f_label_two.background_color[3] == 0.4:
+            MyLayout.data_path_sel.append(MyLayout.data_path[count])
+            color.append(colors[2])
+        count += 1
+            
+        if self.ids.f_label_three.background_color[3] == 0.4:
+            MyLayout.data_path_sel.append(MyLayout.data_path[count])
+            color.append(colors[3])
+        count += 1
+            
+        if self.ids.f_label_four.background_color[3] == 0.4:
+            MyLayout.data_path_sel.append(MyLayout.data_path[count])
+            color.append(colors[4])
+        count += 1
+            
+        if self.ids.f_label_five.background_color[3] == 0.4:
+            MyLayout.data_path_sel.append(MyLayout.data_path[count])
+            color.append(colors[5])
+        count += 1
+            
+        if self.ids.f_label_six.background_color[3] == 0.4:
+            MyLayout.data_path_sel.append(MyLayout.data_path[count])
+            color.append(colors[6])
+        count += 1
+            
+        if self.ids.f_label_sev.background_color[3] == 0.4:
+            MyLayout.data_path_sel.append(MyLayout.data_path[count])
+            color.append(colors[7])
+        count += 1
+            
+        if self.ids.f_label_eigth.background_color[3] == 0.4:
+            MyLayout.data_path_sel.append(MyLayout.data_path[count])
+            color.append(colors[8])
+        
+        matplotlib.rcParams['axes.prop_cycle'] = matplotlib.cycler(
+                                    color=color)
+            
+
+    def plot_all(self):
+        matplotlib.rcParams['axes.prop_cycle'] = matplotlib.cycler(
+                                    color=colors)
+        if MyLayout.data_path:
+            if self.ids.multi_graph.text == "[b]Enable multiple\nfile joint[/b]":
+
+                joints = [self.ids.hip_check.active,
                         self.ids.l_thigh_check.active,
                         self.ids.l_shin_check.active,
                         self.ids.l_foot_check.active,
@@ -141,69 +368,87 @@ class MyLayout(TabbedPanel):
                         self.ids.l_toe_check.active,
                         self.ids.r_toe_check.active]
 
-            # Plot legend
-            MyLayout.set_joint_color(self, joints)
+                if MyLayout.n_file == 0:
+                    self.ids.f_label_zero.background_color[3] = 0.4
+
+                # Plot legend
+                MyLayout.set_joint_color(self, joints)
         
-            # Compute position
-            take, pos_joint = MyLayout.compute_pos(self)
+                # Compute position
+                take, pos_joint = MyLayout.compute_pos(self)
 
-            #Select joints
-            selc_joints, legend = get_joints(pos_joint, joints, MyLayout.legend)
+                #Select joints
+                selc_joints, legend = get_joints(pos_joint, joints, MyLayout.legend)
 
-            # Set slider
-            if MyLayout.set_frame == -1 and True in joints:
-                self.ids.slider.max = len(selc_joints[0])
-                self.ids.slider.value = len(selc_joints[0])
+                # Set slider
+                if MyLayout.set_frame == -1 and True in joints:
+                    self.ids.slider.max = len(selc_joints[0])
+                    self.ids.slider.value = len(selc_joints[0])
 
-            # PLOTS
-            MyLayout.plot_x_t(self, selc_joints, legend, take)
-            MyLayout.plot_y_t(self, selc_joints, legend, take)
-            MyLayout.plot_z_t(self, selc_joints, legend, take)
-            MyLayout.plot_xyz(self, selc_joints, legend, take)
+                # PLOTS
+                MyLayout.plot_x_t(self, selc_joints, legend, take)
+                MyLayout.plot_y_t(self, selc_joints, legend, take)
+                MyLayout.plot_z_t(self, selc_joints, legend, take)
+                MyLayout.plot_xyz(self, selc_joints, legend, take)
+            else:
+                # MyLayout.data_path.clear()
+                MyLayout.data_path_sel.clear()
+                joints = []
+                take = []
+                pos_joint = []
+                select_joint = ""
+                if self.ids.spinner_joint.text == "Joint":
+                    self.ids.spinner_joint.text = MyLayout.legend[0]
+            
+                # Select joint
+                for i in MyLayout.legend:
+                    if self.ids.spinner_joint.text == i:
+                        joints.append(True)
+                        select_joint = i
+                    else:
+                        joints.append(False)
 
-        else:
-            joints = []
-            take = []
-            pos_joint = []
-            select_joint = ""
-            if self.ids.spinner_joint.text == "Joint":
-                self.ids.spinner_joint.text = MyLayout.legend[0]
+                if not True in joints and joints:
+                    joints[0] = True
+                    self.ids.spinner_joint.text = "Hip"
+
+                MyLayout.select_data_path_from_file(self)
+
+                if len(MyLayout.data_path_sel) == 0:
+                    self.ids.f_label_zero.background_color[3] = 0.4
+                    MyLayout.select_data_path_from_file(self)
+
+                # Get data path
+                for i in MyLayout.data_path_sel:
+                    MyLayout.file_name = i
+                    take_tmp, pos_joint_tmp = MyLayout.compute_pos(self)
+                    selc_joints, legend = get_joints(pos_joint_tmp, joints, MyLayout.legend)
+                    take.append(take_tmp)
+                    pos_joint.append(selc_joints)
             
-            # Select joint
-            for i in MyLayout.legend:
-                if self.ids.spinner_joint.text == i:
-                    joints.append(True)
-                    select_joint = i
-                else:
-                    joints.append(False)
-            
-            # Get data path
-            for i in MyLayout.data_path:
-                MyLayout.file_name = i
-                take_tmp, pos_joint_tmp = MyLayout.compute_pos(self)
-                selc_joints, legend = get_joints(pos_joint_tmp, joints, MyLayout.legend)
-                take.append(take_tmp)
-                pos_joint.append(selc_joints)
-            
-            # Compute max frame for slider
-            if MyLayout.set_frame == -1 and True in joints:
-                first = True
-                for i in pos_joint:
-                    if len(i[0]) < self.ids.slider.max or first == True:
-                        self.ids.slider.max = len(i[0])
-                        self.ids.slider.value = len(i[0])
-                        first = False
-            
-            # PLOTS
-            MyLayout.plot_x_t_sJoint(self, pos_joint, select_joint, take)
-            MyLayout.plot_y_t_sJoint(self, pos_joint, select_joint, take)
-            MyLayout.plot_z_t_sJoint(self, pos_joint, select_joint, take)
-            MyLayout.plot_xyz_sJoint(self, pos_joint, select_joint, take)
+                # Compute max frame for slider
+                if MyLayout.set_frame == -1 and True in joints:
+                    first = True
+                    for i in pos_joint:
+                        if len(i[0]) < self.ids.slider.max or first == True:
+                            self.ids.slider.max = len(i[0])
+                            self.ids.slider.value = len(i[0])
+                            first = False
+                
+                # PLOTS
+                MyLayout.plot_x_t_sJoint(self, pos_joint, select_joint, take)
+                MyLayout.plot_y_t_sJoint(self, pos_joint, select_joint, take)
+                MyLayout.plot_z_t_sJoint(self, pos_joint, select_joint, take)
+                MyLayout.plot_xyz_sJoint(self, pos_joint, select_joint, take)
 
     
     def compute_pos(self):
-        take = csv.Take().readCSV(MyLayout.file_name)
-        body = take .rigid_bodies
+        # if MyLayout.data_path
+        if self.ids.multi_graph.text == "[b]Enable multiple\nfile joint[/b]":
+            take = csv.Take().readCSV(MyLayout.data_path[MyLayout.n_file])
+        else:
+            take = csv.Take().readCSV(MyLayout.file_name)
+        body = take.rigid_bodies
         pos = get_bone_pos(body, take)
         return take, pos
 
@@ -231,7 +476,7 @@ class MyLayout(TabbedPanel):
     def plot_x_t_sJoint(self, pos_joint, select_joint, take):
         self.ids.graph_x.clear_widgets()
         fig_x_sJoint, ax_sJoint = plt.subplots()
-        for pos_sJoint, take_sJoint  in zip(pos_joint, take):
+        for pos_sJoint, take_sJoint in zip(pos_joint, take):
             for i in range(0, len(pos_sJoint)):
                 path_x_sJoint, t_x_sJoint = get_marker_path(pos_sJoint, i, take_sJoint)
                 plot_marker_traj(path_x_sJoint, t_x_sJoint, ax_sJoint, MyLayout.set_frame, "x")
@@ -275,7 +520,7 @@ class MyLayout(TabbedPanel):
     def plot_y_t_sJoint(self, pos_joint, select_joint, take):
         self.ids.graph_y.clear_widgets()
         fig_y_sJoint, ay_sJoint = plt.subplots()
-        for pos_sJoint, take_sJoint  in zip(pos_joint, take):
+        for pos_sJoint, take_sJoint in zip(pos_joint, take):
             for i in range(0, len(pos_sJoint)):
                 path_y_sJoint, t_y_sJoint = get_marker_path(pos_sJoint, i, take_sJoint)
                 plot_marker_traj(path_y_sJoint, t_y_sJoint, ay_sJoint, MyLayout.set_frame, "y", reverse_axis = True)
@@ -336,7 +581,7 @@ class MyLayout(TabbedPanel):
 
     def plot_xyz(self, selc_joints, legend, take):
 
-        if self.ids.multiple_choice.text == "[b]Plot X-Z[/b]":
+        if self.ids.multiple_choice.text == "Plot X-Z":
             self.ids.graph_xyz.clear_widgets()
             fig_xyz, axyz = plt.subplots()
 
@@ -356,8 +601,8 @@ class MyLayout(TabbedPanel):
             graph_xyz = self.ids.graph_xyz
             graph_xyz.add_widget(plot_xyz)
 
-        if self.ids.multiple_choice.text == "[b]Plot X-Y[/b]" or self.ids.multiple_choice.text == "Choose the plot":
-            self.ids.multiple_choice.text = "[b]Plot X-Y[/b]"
+        if self.ids.multiple_choice.text == "Plot X-Y" or self.ids.multiple_choice.text == "Choose the plot":
+            self.ids.multiple_choice.text = "Plot X-Y"
             self.ids.graph_xyz.clear_widgets()
             fig_xyz, axyz = plt.subplots()
 
@@ -376,7 +621,7 @@ class MyLayout(TabbedPanel):
             graph_xyz = self.ids.graph_xyz
             graph_xyz.add_widget(plot_xyz)
         
-        if self.ids.multiple_choice.text == "[b]Plot Y-Z[/b]":
+        if self.ids.multiple_choice.text == "Plot Y-Z":
             self.ids.graph_xyz.clear_widgets()
             fig_xyz, axyz = plt.subplots()
 
@@ -397,7 +642,7 @@ class MyLayout(TabbedPanel):
 
 
     def plot_xyz_sJoint(self, pos_joint, select_joint, take):
-
+        
         if self.ids.multiple_choice.text == "Plot X-Z":
             self.ids.graph_xyz.clear_widgets()
             fig_xyz_sJoint, axyz_sJoint = plt.subplots()
