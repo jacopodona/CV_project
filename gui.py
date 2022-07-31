@@ -775,6 +775,7 @@ class MyLayout(TabbedPanel):
         MyLayout.save_plt = False
 
     def plot_3d(self,selc_joints, legend, take):
+        #print(selc_joints)
         fig_3d = self.ids.graph_3d.clear_widgets()
 
         #fig_3d, ax = plt.subplots()
@@ -782,7 +783,13 @@ class MyLayout(TabbedPanel):
         fig_3d = plt.figure(figsize=(8, 4))
         ax = fig_3d.add_subplot(111, projection='3d')
 
-        dir = os.path.dirname(__file__)
+        # Plot all selected joint 3d positions
+        for i in range(0, len(selc_joints)):
+            path_3d, t = get_marker_path(selc_joints, i, take)
+            plot_marker_path_3D(path_3d, ax, MyLayout.set_frame)
+
+
+        """dir = os.path.dirname(__file__)
         run_1 = os.path.join(dir, 'data/Dona_corsa.csv')
         take_run_1 = csv.Take().readCSV(run_1)
         bodies_run_1 = take_run_1.rigid_bodies
@@ -790,9 +797,6 @@ class MyLayout(TabbedPanel):
         marker_r = 0
         path_run_1, t_run_1 = get_marker_path(pos_run_1, marker_r, take_run_1)
         n_frame = 1000
-
-
-
         for i in range(13, len(take_run_1.rigid_bodies.keys())):
             path_run_2_i, t = get_marker_path(pos_run_1, i, take_run_1)
             plot_marker_path_3D(path_run_2_i, ax, n_frame)
@@ -801,7 +805,7 @@ class MyLayout(TabbedPanel):
         ax.set_ylabel('Y')
         ax.set_ylim(-2.5, 2.5)
         ax.set_zlabel('Z')
-        ax.set_zlim(0, 2)
+        ax.set_zlim(0, 2)"""
 
 
         plot_3d_Joint = FigureCanvas(fig_3d)

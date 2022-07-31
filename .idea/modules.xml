@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CV_project.iml" filepath="$PROJECT_DIR$/.idea/CV_project.iml" />
       <module fileurl="file://$PROJECT_DIR$/../MotionCaptureLaboratory-main/.idea/MotionCaptureLaboratory-main.iml" filepath="$PROJECT_DIR$/../MotionCaptureLaboratory-main/.idea/MotionCaptureLaboratory-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../old project/.idea/old project.iml" filepath="$PROJECT_DIR$/../old project/.idea/old project.iml" />
     </modules>
   </component>
 </project>
