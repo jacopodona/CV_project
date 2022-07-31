@@ -775,7 +775,7 @@ class MyLayout(TabbedPanel):
         MyLayout.save_plt = False
 
     def plot_3d(self,selc_joints, legend, take):
-        #print(selc_joints)
+        print("Selected joints:",len(selc_joints))
         fig_3d = self.ids.graph_3d.clear_widgets()
 
         #fig_3d, ax = plt.subplots()

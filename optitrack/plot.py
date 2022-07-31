@@ -79,12 +79,15 @@ def plot_marker_path_3D(marker_pos, ax, frame = "none"):
 #   plot 3D path
 #   plot is parametric with numeber of frame selected 
 #
-    if frame == "none":
+    ax.plot3D(marker_pos[0][0:frame],marker_pos[1][0:frame], marker_pos[2][0:frame])#x,y,z
+    print("Frame number in take: ",len(marker_pos[0]))
+    """if frame == "none":
         frame = len(marker_pos[0])
     if frame <= len(marker_pos[0]):
         ax.plot3D(marker_pos[0][0:frame],marker_pos[1][0:frame], marker_pos[2][0:frame])#x,y,z
+        print("Frame number in take: ",len(marker_pos[0]))
     else:
-        print("frame selected out of bound, max number is: ", len(marker_pos[0]))
+        print("frame selected out of bound, max number is: ", len(marker_pos[0]))"""
         
 
 ###----- TRAJECTORY PLOT ------###
