@@ -774,7 +774,7 @@ class MyLayout(TabbedPanel):
         MyLayout.plot_all(self)
         MyLayout.save_plt = False
 
-    def plot_3d(self,selc_joints=None, legend=None, take=None):
+    def plot_3d(self,selc_joints, legend, take):
         fig_3d = self.ids.graph_3d.clear_widgets()
 
         #fig_3d, ax = plt.subplots()
@@ -809,7 +809,87 @@ class MyLayout(TabbedPanel):
         graph_3d.add_widget(plot_3d_Joint)
 
     def plot_all_3d(self):
-        X="prova"
+        matplotlib.rcParams['axes.prop_cycle'] = matplotlib.cycler(
+            color=colors)
+        if MyLayout.data_path:
+            if self.ids.multi_graph.text == "[b]Enable multiple\nfile joint[/b]":
+
+                joints = [self.ids.hip_check_3d.active,
+                          self.ids.l_thigh_check_3d.active,
+                          self.ids.l_shin_check_3d.active,
+                          self.ids.l_foot_check_3d.active,
+                          self.ids.r_thigh_check_3d.active,
+                          self.ids.r_shin_check_3d.active,
+                          self.ids.r_foot_check_3d.active,
+                          self.ids.l_toe_check_3d.active,
+                          self.ids.r_toe_check_3d.active]
+
+                if MyLayout.n_file == 0:
+                    self.ids.f_label_zero.background_color[3] = 0.4
+
+                # Plot legend
+                MyLayout.set_joint_color_3d(self, joints)
+
+                # Compute position
+                take, pos_joint = MyLayout.compute_pos(self)
+
+                # Select joints
+                selc_joints, legend = get_joints(pos_joint, joints, MyLayout.legend)
+
+                # Set slider
+                if MyLayout.set_frame == -1 and True in joints:
+                    self.ids.slider.max = len(selc_joints[0])
+                    self.ids.slider.value = len(selc_joints[0])
+
+                # PLOTS
+                MyLayout.plot_3d(self, selc_joints, legend, take)
+            else:
+                # MyLayout.data_path.clear()
+                MyLayout.data_path_sel.clear()
+                joints = []
+                take = []
+                pos_joint = []
+                select_joint = ""
+                if self.ids.spinner_joint.text == "Joint":
+                    self.ids.spinner_joint.text = MyLayout.legend[0]
+
+                # Select joint
+                for i in MyLayout.legend:
+                    if self.ids.spinner_joint.text == i:
+                        joints.append(True)
+                        select_joint = i
+                    else:
+                        joints.append(False)
+
+                if not True in joints and joints:
+                    joints[0] = True
+                    self.ids.spinner_joint.text = "Hip"
+
+                MyLayout.select_data_path_from_file(self)
+
+                if len(MyLayout.data_path_sel) == 0:
+                    self.ids.f_label_zero.background_color[3] = 0.4
+                    MyLayout.select_data_path_from_file(self)
+
+                # Get data path
+                for i in MyLayout.data_path_sel:
+                    MyLayout.file_name = i
+                    take_tmp, pos_joint_tmp = MyLayout.compute_pos(self)
+                    selc_joints, legend = get_joints(pos_joint_tmp, joints, MyLayout.legend)
+                    take.append(take_tmp)
+                    pos_joint.append(selc_joints)
+
+                # Compute max frame for slider
+                if MyLayout.set_frame == -1 and True in joints:
+                    first = True
+                    for i in pos_joint:
+                        if len(i[0]) < self.ids.slider.max or first == True:
+                            self.ids.slider.max = len(i[0])
+                            self.ids.slider.value = len(i[0])
+                            first = False
+
+                # PLOTS
+                MyLayout.plot_3d(self, pos_joint, select_joint, take)
 
     def select_all_3d(self):
         if self.ids.button_sel_3d.text == "[b]Check all[/b]":
@@ -834,6 +914,54 @@ class MyLayout(TabbedPanel):
             self.ids.l_toe_check_3d.active = False
             self.ids.r_toe_check_3d.active = False
             self.ids.button_sel_3d.text = "[b]Check all[/b]"
+
+    def set_joint_color_3d(self, joints):
+        count = 0
+        if joints[0]:
+            self.ids.hip_text_3d.background_color =  matplotlib.colors.to_rgba(colors[count], alpha=None)
+            count += 1
+        else:
+            self.ids.hip_text_3d.background_color = (1, 237/255, 237/255, 1)
+        if joints[1]:
+            self.ids.l_thigh_text_3d.background_color =  matplotlib.colors.to_rgba(colors[count], alpha=None)
+            count += 1
+        else:
+            self.ids.l_thigh_text_3d.background_color = (1, 237/255, 237/255, 1)
+        if joints[2]:
+            self.ids.l_shin_text_3d.background_color =  matplotlib.colors.to_rgba(colors[count], alpha=None)
+            count += 1
+        else:
+            self.ids.l_shin_text_3d.background_color = (1, 237/255, 237/255, 1)
+        if joints[3]:
+            self.ids.l_foot_text_3d.background_color =  matplotlib.colors.to_rgba(colors[count], alpha=None)
+            count += 1
+        else:
+            self.ids.l_foot_text_3d.background_color = (1, 237/255, 237/255, 1)
+        if joints[4]:
+            self.ids.r_thigh_text_3d.background_color =  matplotlib.colors.to_rgba(colors[count], alpha=None)
+            count += 1
+        else:
+            self.ids.r_thigh_text_3d.background_color = (1, 237/255, 237/255, 1)
+        if joints[5]:
+            self.ids.r_shin_text_3d.background_color =  matplotlib.colors.to_rgba(colors[count], alpha=None)
+            count += 1
+        else:
+            self.ids.r_shin_text_3d.background_color = (1, 237/255, 237/255, 1)
+        if joints[6]:
+            self.ids.r_foot_text_3d.background_color=  matplotlib.colors.to_rgba(colors[count], alpha=None)
+            count += 1
+        else:
+            self.ids.r_foot_text_3d.background_color = (1, 237/255, 237/255, 1)
+        if joints[7]:
+            self.ids.l_toe_text_3d.background_color =  matplotlib.colors.to_rgba(colors[count], alpha=None)
+            count += 1
+        else:
+            self.ids.l_toe_text_3d.background_color = (1, 237/255, 237/255, 1)
+        if joints[8]:
+            self.ids.r_toe_text_3d.background_color=  matplotlib.colors.to_rgba(colors[count], alpha=None)
+            count += 1
+        else:
+            self.ids.r_toe_text_3d.background_color = (1, 237/255, 237/255, 1)
 
 
 

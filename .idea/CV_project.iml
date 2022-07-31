@@ -5,7 +5,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="MotionCaptureLaboratory-main" />
-    <orderEntry type="module" module-name="old project" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />
