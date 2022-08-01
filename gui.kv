@@ -330,6 +330,25 @@
             #Chosing part
             BoxLayout:
                 orientation: "vertical"
+
+                GridLayout:
+                    cols: 2
+                    rows: 1
+                    size_hint: 1, .1
+
+                    BackgroundLabel:
+                        text: "Change  path length"
+                        font_size: 20
+
+                    Slider:
+                        id: slider_3d
+                        min: 1
+                        max: 1000
+                        step: 1
+                        orientation: "horizontal"
+                        value: self.max
+                        on_value: root.slide_it(*args)
+
                 BackgroundLabel:
                     text: "Choose body parts"
                     font_size: 32

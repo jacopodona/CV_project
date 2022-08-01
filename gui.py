@@ -788,26 +788,6 @@ class MyLayout(TabbedPanel):
             path_3d, t = get_marker_path(selc_joints, i, take)
             plot_marker_path_3D(path_3d, ax, MyLayout.set_frame)
 
-
-        """dir = os.path.dirname(__file__)
-        run_1 = os.path.join(dir, 'data/Dona_corsa.csv')
-        take_run_1 = csv.Take().readCSV(run_1)
-        bodies_run_1 = take_run_1.rigid_bodies
-        pos_run_1 = old_get_bone_pos(bodies_run_1, take_run_1)
-        marker_r = 0
-        path_run_1, t_run_1 = get_marker_path(pos_run_1, marker_r, take_run_1)
-        n_frame = 1000
-        for i in range(13, len(take_run_1.rigid_bodies.keys())):
-            path_run_2_i, t = get_marker_path(pos_run_1, i, take_run_1)
-            plot_marker_path_3D(path_run_2_i, ax, n_frame)
-        ax.set_xlabel('X')
-        ax.set_xlim(-2.5, 2.5)
-        ax.set_ylabel('Y')
-        ax.set_ylim(-2.5, 2.5)
-        ax.set_zlabel('Z')
-        ax.set_zlim(0, 2)"""
-
-
         plot_3d_Joint = FigureCanvas(fig_3d)
         graph_3d = self.ids.graph_3d
         graph_3d.add_widget(plot_3d_Joint)
@@ -816,38 +796,38 @@ class MyLayout(TabbedPanel):
         matplotlib.rcParams['axes.prop_cycle'] = matplotlib.cycler(
             color=colors)
         if MyLayout.data_path:
-            if self.ids.multi_graph.text == "[b]Enable multiple\nfile joint[/b]":
+            #if self.ids.multi_graph.text == "[b]Enable multiple\nfile joint[/b]":
+            joints = [self.ids.hip_check_3d.active,
+                      self.ids.l_thigh_check_3d.active,
+                      self.ids.l_shin_check_3d.active,
+                      self.ids.l_foot_check_3d.active,
+                      self.ids.r_thigh_check_3d.active,
+                      self.ids.r_shin_check_3d.active,
+                      self.ids.r_foot_check_3d.active,
+                      self.ids.l_toe_check_3d.active,
+                      self.ids.r_toe_check_3d.active]
 
-                joints = [self.ids.hip_check_3d.active,
-                          self.ids.l_thigh_check_3d.active,
-                          self.ids.l_shin_check_3d.active,
-                          self.ids.l_foot_check_3d.active,
-                          self.ids.r_thigh_check_3d.active,
-                          self.ids.r_shin_check_3d.active,
-                          self.ids.r_foot_check_3d.active,
-                          self.ids.l_toe_check_3d.active,
-                          self.ids.r_toe_check_3d.active]
+            if MyLayout.n_file == 0:
+                self.ids.f_label_zero.background_color[3] = 0.4
 
-                if MyLayout.n_file == 0:
-                    self.ids.f_label_zero.background_color[3] = 0.4
+            # Plot legend
+            MyLayout.set_joint_color_3d(self, joints)
 
-                # Plot legend
-                MyLayout.set_joint_color_3d(self, joints)
+            # Compute position
+            take, pos_joint = MyLayout.compute_pos(self)
 
-                # Compute position
-                take, pos_joint = MyLayout.compute_pos(self)
+            # Select joints
+            selc_joints, legend = get_joints(pos_joint, joints, MyLayout.legend)
 
-                # Select joints
-                selc_joints, legend = get_joints(pos_joint, joints, MyLayout.legend)
+            # Set slider
+            if MyLayout.set_frame == -1 and True in joints:
+                self.ids.slider_3d.max = len(selc_joints[0])
+                self.ids.slider_3d.value = len(selc_joints[0])
 
-                # Set slider
-                if MyLayout.set_frame == -1 and True in joints:
-                    self.ids.slider.max = len(selc_joints[0])
-                    self.ids.slider.value = len(selc_joints[0])
-
-                # PLOTS
-                MyLayout.plot_3d(self, selc_joints, legend, take)
-            else:
+            # PLOTS
+            MyLayout.plot_3d(self, selc_joints, legend, take)
+            """else:
+                print("Route 2")
                 # MyLayout.data_path.clear()
                 MyLayout.data_path_sel.clear()
                 joints = []
@@ -887,13 +867,13 @@ class MyLayout(TabbedPanel):
                 if MyLayout.set_frame == -1 and True in joints:
                     first = True
                     for i in pos_joint:
-                        if len(i[0]) < self.ids.slider.max or first == True:
-                            self.ids.slider.max = len(i[0])
-                            self.ids.slider.value = len(i[0])
+                        if len(i[0]) < self.ids.slider_3d.max or first == True:
+                            self.ids.slider_3d.max = len(i[0])
+                            self.ids.slider_3d.value = len(i[0])
                             first = False
 
                 # PLOTS
-                MyLayout.plot_3d(self, pos_joint, select_joint, take)
+                MyLayout.plot_3d(self, pos_joint, select_joint, take)"""
 
     def select_all_3d(self):
         if self.ids.button_sel_3d.text == "[b]Check all[/b]":
@@ -967,6 +947,10 @@ class MyLayout(TabbedPanel):
         else:
             self.ids.r_toe_text_3d.background_color = (1, 237/255, 237/255, 1)
 
+    def slide_it_3d(self, *args):
+        MyLayout.set_frame = int(args[1])
+        if MyLayout.slider:
+            MyLayout.plot_all_3d(self)
 
 
 class App2(App):
