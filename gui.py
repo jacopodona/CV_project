@@ -41,7 +41,7 @@ class MyLayout(TabbedPanel):
     my_path = os.path.dirname(__file__)
     color_count = 0
     n_file = 0
-
+    animate = False
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -774,7 +774,8 @@ class MyLayout(TabbedPanel):
         MyLayout.plot_all(self)
         MyLayout.save_plt = False
 
-    def plot_3d(self,selc_joints, legend, take):
+
+    def plot_3d(self, selc_joints, legend, take):
         print("Selected joints:",len(selc_joints))
         fig_3d = self.ids.graph_3d.clear_widgets()
 
@@ -783,14 +784,36 @@ class MyLayout(TabbedPanel):
         fig_3d = plt.figure(figsize=(8, 4))
         ax = fig_3d.add_subplot(111, projection='3d')
 
-        # Plot all selected joint 3d positions
-        for i in range(0, len(selc_joints)):
-            path_3d, t = get_marker_path(selc_joints, i, take)
-            plot_marker_path_3D(path_3d, ax, MyLayout.set_frame)
+        
+        if not MyLayout.animate:
+            # Plot all selected joint 3d positions
+            for i in range(0, len(selc_joints)):
+                path_3d, t = get_marker_path(selc_joints, i, take)
+                plot_marker_path_3D(path_3d, ax, MyLayout.set_frame)
+            
+            plot_3d_Joint = FigureCanvas(fig_3d)
+            graph_3d = self.ids.graph_3d
+            graph_3d.add_widget(plot_3d_Joint)
+        else:
+            pass
+            # 
+            # path_tmp = []
+            # # Plot all selected joint 3d position Aniamtion
+            # for i in range(0, len(selc_joints)):
+            #     path_3d, t = get_marker_path(selc_joints, i, take)
+            #     path_tmp.append(path_3d)
 
-        plot_3d_Joint = FigureCanvas(fig_3d)
-        graph_3d = self.ids.graph_3d
-        graph_3d.add_widget(plot_3d_Joint)
+            # for j in range(0, MyLayout.set_frame, 1000):
+            #     self.ids.graph_3d.clear_widgets()
+            #     for path in path_tmp:
+            #         plot_marker_path_3D(path, ax, j)
+            #     plot_3d_Joint = FigureCanvas(fig_3d)
+            #     graph_3d = self.ids.graph_3d
+            #     graph_3d.add_widget(plot_3d_Joint)
+            #     time.sleep(1)
+
+        
+
 
     def plot_all_3d(self):
         matplotlib.rcParams['axes.prop_cycle'] = matplotlib.cycler(
@@ -875,6 +898,7 @@ class MyLayout(TabbedPanel):
                 # PLOTS
                 MyLayout.plot_3d(self, pos_joint, select_joint, take)"""
 
+
     def select_all_3d(self):
         if self.ids.button_sel_3d.text == "[b]Check all[/b]":
             self.ids.hip_check_3d.active = True
@@ -898,6 +922,7 @@ class MyLayout(TabbedPanel):
             self.ids.l_toe_check_3d.active = False
             self.ids.r_toe_check_3d.active = False
             self.ids.button_sel_3d.text = "[b]Check all[/b]"
+
 
     def set_joint_color_3d(self, joints):
         count = 0
@@ -947,11 +972,20 @@ class MyLayout(TabbedPanel):
         else:
             self.ids.r_toe_text_3d.background_color = (1, 237/255, 237/255, 1)
 
+
     def slide_it_3d(self, *args):
         MyLayout.set_frame = int(args[1])
         if MyLayout.slider:
             MyLayout.plot_all_3d(self)
 
+
+    def animation(self):
+        if self.ids.button_animate_3d.text == "[b]Activate animation[/b]":
+            MyLayout.animate = True
+            self.ids.button_animate_3d.text = "[b]Deactivate animation[/b]"
+        else:
+            MyLayout.animate = False
+            self.ids.button_animate_3d.text = "[b]Activate animation[/b]"
 
 class App2(App):
     def build(self):
