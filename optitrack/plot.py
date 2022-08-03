@@ -80,14 +80,12 @@ def plot_marker_path_3D(marker_pos, ax, frame = "none"):
 #   plot is parametric with numeber of frame selected 
 #
     #ax.plot3D(marker_pos[0][0:frame],marker_pos[1][0:frame], marker_pos[2][0:frame])#x,y,z
-    print("Frame number in take: ",len(marker_pos[0]))
     if frame == "none":
         frame = len(marker_pos[0])
     if frame <= len(marker_pos[0]) or frame <= (len(marker_pos[0])+5):#allows printing of joints that have small amount of missing frames positions
         ax.plot3D(marker_pos[0][0:frame],marker_pos[1][0:frame], marker_pos[2][0:frame])#x,y,z
-        print("Frame number in take: ",len(marker_pos[0]))
-    else:
-        print("frame selected out of bound, max number is: ", len(marker_pos[0]))
+    # else:
+    #     print("frame selected out of bound, max number is: ", len(marker_pos[0]))
         
 
 ###----- TRAJECTORY PLOT ------###
@@ -122,10 +120,10 @@ def plot_3d_joints(joints, ax, frame):
 #   plot is parametric with frame istance
 #
     #plot the hip
-    if(joints[0][frame]!=None):
+    if(joints[0][frame]!= None):
         ax.scatter(joints[0][frame][2], joints[0][frame][0], joints[0][frame][1])
     #plot the lower body
-    for i in range(13,21):#Plot all lower body
+    for i in range(1, len(joints)):#Plot all lower body
         if(joints[i][frame]!=None):
             ax.scatter(joints[i][frame][2], joints[i][frame][0], joints[i][frame][1])
 
@@ -142,7 +140,10 @@ def plot_3d_skeleton(joints,ax,frame,color):
     #Plot all points
         plot_3d_joints(joints, ax, frame)
         #Plot edge connections
-        body_edges = [[0, 1], [0, 13], [13, 14], [14, 15],[0, 16], [16, 17], [17, 18], [18, 20], [15, 19]]
+        # body_edges = [[0, 1], [0, 13], [13, 14], [14, 15],[0, 16], [16, 17], [17, 18], [18, 20], [15, 19]]
+        # body_edges = [[0, 13], [13, 14], [14, 15],[0, 16], [16, 17], [17, 18], [18, 20], [15, 19]]
+
+        body_edges = [[0, 1], [1, 2], [2, 3], [0, 4], [4, 5], [5, 6], [6, 8], [3, 7]]
         for joint1,joint2 in body_edges:
             if (joints[joint1][frame]!=None and joints[joint2][frame]!=None):
                 plot_3d_line(ax,joints[joint1][frame],joints[joint2][frame],color)

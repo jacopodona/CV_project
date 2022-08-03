@@ -15,6 +15,7 @@ import os
 from optitrack.plot import *
 import optitrack.csv_reader as csv
 from optitrack.geometry import *
+from matplotlib import animation, rc
 
 
 # Initialization
@@ -38,6 +39,8 @@ class MyLayout(TabbedPanel):
     file_name_array = []
     data_path = []
     data_path_sel = []
+    data_path_anim = []
+    spinner = []
     my_path = os.path.dirname(__file__)
     color_count = 0
     n_file = 0
@@ -232,6 +235,10 @@ class MyLayout(TabbedPanel):
                 pr = False
 
             MyLayout.color_count += 1             
+
+            MyLayout.spinner.append(os.path.basename(MyLayout.file_name))
+            self.ids.sel_anim1.values = MyLayout.spinner
+            self.ids.sel_anim2.values = MyLayout.spinner
 
 
     def clear_data(self):
@@ -453,6 +460,80 @@ class MyLayout(TabbedPanel):
         return take, pos
 
 
+    def text_file_plt(self):
+        count = 0
+        zero =False
+        one = False
+        two = False
+        three = False
+        four = False
+        five = False
+        six = False
+        sev =False
+        eigth = False
+
+        if self.ids.f_label_zero.background_color[3] == 0.4:
+            count += 1
+            zero = True
+        if self.ids.f_label_one.background_color[3] == 0.4:
+            count += 1
+            one = True
+        if self.ids.f_label_two.background_color[3] == 0.4:
+            count += 1
+            two = True
+        if self.ids.f_label_three.background_color[3] == 0.4:
+            count += 1
+            three = True
+        if self.ids.f_label_four.background_color[3] == 0.4:
+            count += 1
+            four = True
+        if self.ids.f_label_five.background_color[3] == 0.4:
+            count += 1
+            five = True
+        if self.ids.f_label_six.background_color[3] == 0.4:
+            count += 1
+            six = True
+        if self.ids.f_label_sev.background_color[3] == 0.4:
+            count += 1
+            sev = True
+        if self.ids.f_label_eigth.background_color[3] == 0.4:
+            count += 1
+            eigth = True
+        
+        if count == 0:
+            if MyLayout.data_path:
+                self.ids.f_label_zero.background_color[3] = 0.4
+                self.ids.text_sel_file.text = f"The selected file is: [b]{self.ids.f_label_zero.text}[/b]"
+            else:
+                self.ids.text_sel_file.text = f"No file is selected"
+
+        if count > 1:
+            MyLayout.set_file_color_to_std(self)
+            self.ids.f_label_zero.background_color[3] = 0.4
+            self.ids.text_sel_file.text = f"The selected file is: [b]{self.ids.f_label_zero.text}[/b]"
+        
+        if count == 1:
+            if zero == True:
+                text = self.ids.f_label_zero.text
+            if one == True:
+                text = self.ids.f_label_one.text
+            if two == True:
+                text = self.ids.f_label_two.text
+            if three == True:
+                text = self.ids.f_label_three.text
+            if four == True:
+                text = self.ids.f_label_four.text
+            if five == True:
+                text = self.ids.f_label_five.text
+            if six == True:
+                text = self.ids.f_label_six.text
+            if sev == True:
+                text = self.ids.f_label_sev.text
+            if eigth == True:
+                text = self.ids.f_label_eigth.text
+            self.ids.text_sel_file.text = f"The selected file is: [b]{text}[/b]"
+
+
     def plot_x_t(self, selc_joints, legend, take):
         self.ids.graph_x.clear_widgets()
         fig_x, ax = plt.subplots()
@@ -465,6 +546,7 @@ class MyLayout(TabbedPanel):
         #Plot options
         ax.set_xlabel("t")
         ax.set_ylabel("x")
+        ax.set_title("Evolution of x(t) for multiple body part")
         if MyLayout.save_plt:
             my_file = 'x_t take.png'
             fig_x.savefig(os.path.join(MyLayout.my_path, my_file))
@@ -484,6 +566,7 @@ class MyLayout(TabbedPanel):
         #Plot options
         ax_sJoint.set_xlabel("t")
         ax_sJoint.set_ylabel("x")
+        ax_sJoint.set_title(f"Evolution of x(t) for multiple files [{self.ids.spinner_joint.text}]")
         if MyLayout.save_plt:
             my_file = f'x_t_{select_joint} take.png'
             fig_x_sJoint.savefig(os.path.join(MyLayout.my_path, my_file))
@@ -505,7 +588,8 @@ class MyLayout(TabbedPanel):
         #Plot options
         ay.set_ylabel("t", rotation=90)
         ay.yaxis.tick_right()
-        ay.yaxis.set_label_position("right")    
+        ay.yaxis.set_label_position("right")
+        ay.set_title("Evolution of y(t) for multiple body part")    
         ay.set_xlabel("y")
         ay.invert_xaxis()
         ay.invert_yaxis()
@@ -532,6 +616,7 @@ class MyLayout(TabbedPanel):
         ay_sJoint.set_xlabel("y")
         ay_sJoint.invert_xaxis()
         ay_sJoint.invert_yaxis()
+        ay_sJoint.set_title(f"Evolution of y(t) for multiple files [{self.ids.spinner_joint.text}]")
         if MyLayout.save_plt:
             my_file = f'y_t_{select_joint} take.png'
             fig_y_sJoint.savefig(os.path.join(MyLayout.my_path, my_file))
@@ -552,6 +637,7 @@ class MyLayout(TabbedPanel):
         #Plot options
         az.set_xlabel("t")
         az.set_ylabel("z")
+        az.set_title("Evolution of z(t) for multiple body part")
         if MyLayout.save_plt:
             my_file = 'z_t take.png'
             fig_z.savefig(os.path.join(MyLayout.my_path, my_file))
@@ -571,6 +657,7 @@ class MyLayout(TabbedPanel):
         #Plot options
         az_sJoint.set_xlabel("t")
         az_sJoint.set_ylabel("z")
+        az_sJoint.set_title(f"Evolution of z(t) for multiple files [{self.ids.spinner_joint.text}]")
         if MyLayout.save_plt:
             my_file = f'z_t_{select_joint} take.png'
             fig_z_sJoint.savefig(os.path.join(MyLayout.my_path, my_file))
@@ -593,6 +680,7 @@ class MyLayout(TabbedPanel):
             #Plot options
             axyz.set_xlabel("x")
             axyz.set_ylabel("z")
+            axyz.set_title("Evolution on X-Z plane for multiple body part")
             if MyLayout.save_plt:
                 my_file = 'x_z take.png'
                 fig_xyz.savefig(os.path.join(MyLayout.my_path, my_file))
@@ -614,6 +702,7 @@ class MyLayout(TabbedPanel):
             #Plot options
             axyz.set_xlabel("x")
             axyz.set_ylabel("y")
+            axyz.set_title("Evolution on X-Y plane for multiple body part")
             if MyLayout.save_plt:
                 my_file = 'x_y take.png'
                 fig_xyz.savefig(os.path.join(MyLayout.my_path, my_file))
@@ -633,6 +722,7 @@ class MyLayout(TabbedPanel):
             #Plot options
             axyz.set_xlabel("y")
             axyz.set_ylabel("z")
+            axyz.set_title("Evolution on Y-Z plane for multiple body part")
             if MyLayout.save_plt:
                 my_file = 'y_z take.png'
                 fig_xyz.savefig(os.path.join(MyLayout.my_path, my_file))
@@ -656,6 +746,7 @@ class MyLayout(TabbedPanel):
             #Plot options
             axyz_sJoint.set_xlabel("x")
             axyz_sJoint.set_ylabel("z")
+            axyz_sJoint.set_title(f"Evolution on X-Z plane for multiple files [{self.ids.spinner_joint.text}]")
             if MyLayout.save_plt:
                 my_file = f'x_z_{select_joint} take.png'
                 fig_xyz_sJoint.savefig(os.path.join(MyLayout.my_path, my_file))
@@ -677,6 +768,7 @@ class MyLayout(TabbedPanel):
             #Plot options
             axyz_sJoint.set_xlabel("x")
             axyz_sJoint.set_ylabel("y")
+            axyz_sJoint.set_title(f"Evolution on X-Y plane for multiple files [{self.ids.spinner_joint.text}]")
             if MyLayout.save_plt:
                 my_file = f'x_y_{select_joint} take.png'
                 fig_xyz_sJoint.savefig(os.path.join(MyLayout.my_path, my_file))
@@ -697,6 +789,7 @@ class MyLayout(TabbedPanel):
             #Plot options
             axyz_sJoint.set_xlabel("y")
             axyz_sJoint.set_ylabel("z")
+            axyz_sJoint.set_title(f"Evolution on Y-Z plane for multiple files [{self.ids.spinner_joint.text}]")
             if MyLayout.save_plt:
                 my_file = f'y_z_{select_joint} take.png'
                 fig_xyz_sJoint.savefig(os.path.join(MyLayout.my_path, my_file))
@@ -775,49 +868,41 @@ class MyLayout(TabbedPanel):
         MyLayout.save_plt = False
 
 
+    def save_plts_3d(self):
+        MyLayout.save_plt = True
+        MyLayout.plot_all_3d(self)
+        MyLayout.save_plt = False
+
+
     def plot_3d(self, selc_joints, legend, take):
-        print("Selected joints:",len(selc_joints))
         fig_3d = self.ids.graph_3d.clear_widgets()
-
-        #fig_3d, ax = plt.subplots()
-
         fig_3d = plt.figure(figsize=(8, 4))
         ax = fig_3d.add_subplot(111, projection='3d')
-
         
-        if not MyLayout.animate:
-            # Plot all selected joint 3d positions
-            for i in range(0, len(selc_joints)):
-                path_3d, t = get_marker_path(selc_joints, i, take)
-                plot_marker_path_3D(path_3d, ax, MyLayout.set_frame)
-            
-            plot_3d_Joint = FigureCanvas(fig_3d)
-            graph_3d = self.ids.graph_3d
-            graph_3d.add_widget(plot_3d_Joint)
-        else:
-            pass
-            # 
-            # path_tmp = []
-            # # Plot all selected joint 3d position Aniamtion
-            # for i in range(0, len(selc_joints)):
-            #     path_3d, t = get_marker_path(selc_joints, i, take)
-            #     path_tmp.append(path_3d)
+        # Plot all selected joint 3d positions
+        for i in range(0, len(selc_joints)):
+            path_3d, t = get_marker_path(selc_joints, i, take)
+            plot_marker_path_3D(path_3d, ax, MyLayout.set_frame)
 
-            # for j in range(0, MyLayout.set_frame, 1000):
-            #     self.ids.graph_3d.clear_widgets()
-            #     for path in path_tmp:
-            #         plot_marker_path_3D(path, ax, j)
-            #     plot_3d_Joint = FigureCanvas(fig_3d)
-            #     graph_3d = self.ids.graph_3d
-            #     graph_3d.add_widget(plot_3d_Joint)
-            #     time.sleep(1)
+        ax.set_title("Evolution in 3D of multiple joint")
+        ax.set_xlabel("x")
+        ax.set_ylabel("y")
+        ax.set_zlabel("z")
+        if MyLayout.save_plt:
+            my_file = '3D take.png'
+            fig_3d.savefig(os.path.join(MyLayout.my_path, my_file))
 
+        plot_3d_Joint = FigureCanvas(fig_3d)
+        graph_3d = self.ids.graph_3d
+        graph_3d.add_widget(plot_3d_Joint)
         
-
-
+        
     def plot_all_3d(self):
         matplotlib.rcParams['axes.prop_cycle'] = matplotlib.cycler(
             color=colors)
+        
+        MyLayout.text_file_plt(self)
+
         if MyLayout.data_path:
             #if self.ids.multi_graph.text == "[b]Enable multiple\nfile joint[/b]":
             joints = [self.ids.hip_check_3d.active,
@@ -849,55 +934,7 @@ class MyLayout(TabbedPanel):
 
             # PLOTS
             MyLayout.plot_3d(self, selc_joints, legend, take)
-            """else:
-                print("Route 2")
-                # MyLayout.data_path.clear()
-                MyLayout.data_path_sel.clear()
-                joints = []
-                take = []
-                pos_joint = []
-                select_joint = ""
-                if self.ids.spinner_joint.text == "Joint":
-                    self.ids.spinner_joint.text = MyLayout.legend[0]
-
-                # Select joint
-                for i in MyLayout.legend:
-                    if self.ids.spinner_joint.text == i:
-                        joints.append(True)
-                        select_joint = i
-                    else:
-                        joints.append(False)
-
-                if not True in joints and joints:
-                    joints[0] = True
-                    self.ids.spinner_joint.text = "Hip"
-
-                MyLayout.select_data_path_from_file(self)
-
-                if len(MyLayout.data_path_sel) == 0:
-                    self.ids.f_label_zero.background_color[3] = 0.4
-                    MyLayout.select_data_path_from_file(self)
-
-                # Get data path
-                for i in MyLayout.data_path_sel:
-                    MyLayout.file_name = i
-                    take_tmp, pos_joint_tmp = MyLayout.compute_pos(self)
-                    selc_joints, legend = get_joints(pos_joint_tmp, joints, MyLayout.legend)
-                    take.append(take_tmp)
-                    pos_joint.append(selc_joints)
-
-                # Compute max frame for slider
-                if MyLayout.set_frame == -1 and True in joints:
-                    first = True
-                    for i in pos_joint:
-                        if len(i[0]) < self.ids.slider_3d.max or first == True:
-                            self.ids.slider_3d.max = len(i[0])
-                            self.ids.slider_3d.value = len(i[0])
-                            first = False
-
-                # PLOTS
-                MyLayout.plot_3d(self, pos_joint, select_joint, take)"""
-
+        
 
     def select_all_3d(self):
         if self.ids.button_sel_3d.text == "[b]Check all[/b]":
@@ -979,13 +1016,86 @@ class MyLayout(TabbedPanel):
             MyLayout.plot_all_3d(self)
 
 
-    def animation(self):
-        if self.ids.button_animate_3d.text == "[b]Activate animation[/b]":
-            MyLayout.animate = True
-            self.ids.button_animate_3d.text = "[b]Deactivate animation[/b]"
-        else:
-            MyLayout.animate = False
-            self.ids.button_animate_3d.text = "[b]Activate animation[/b]"
+    def save_animation(self):
+        MyLayout.save_plt = True
+        MyLayout.aniamtion(self)
+        MyLayout.save_plt = False
+
+
+    def select_data_path_from_spinner(self):
+        for i in MyLayout.data_path:
+            if self.ids.sel_anim1.text in i:
+                MyLayout.data_path_anim.append(i)
+            if self.ids.sel_anim2.text in i:
+                MyLayout.data_path_anim.append(i)
+        
+
+    def plot_animation(self):
+
+        MyLayout.data_path_anim.clear()
+        take = []
+        pos_joint = []
+
+
+        MyLayout.select_data_path_from_spinner(self)
+        if len(MyLayout.data_path_anim) == 0:
+            self.ids.f_label_zero.background_color[3] = 0.4
+            MyLayout.select_data_path_from_file(self)
+
+        # Get data path
+        for i in MyLayout.data_path_anim:
+            MyLayout.file_name = i
+            take_tmp, pos_joint_tmp = MyLayout.compute_pos(self)
+            take.append(take_tmp)
+            pos_joint.append(pos_joint_tmp)
+
+        MyLayout.aniamtions(self, pos_joint)
+
+    #### da cambiaree
+    def init_anim():
+        pass
+    def animate(i):
+        pass
+
+
+    def aniamtions(self, data):
+        fig = plt.figure(figsize=(8,4))
+        ax = plt.axes(projection='3d')
+        
+        ax.set_xlim(-2.5, 1)
+        ax.set_ylim(-2.5, 1)
+        ax.set_zlim(0, 1)
+        ax.set_xlabel("x")
+        ax.set_ylabel("y")
+        ax.set_zlabel("z")
+        ax.set_title("3D animation of lower body")
+        
+        anim = animation.FuncAnimation(fig, MyLayout.animate, init_func = MyLayout.init_anim,
+                               frames=100, interval=20, blit=True)
+
+        plt.ion()
+        frame = 0
+        for i in range(frame,frame+2000,10):
+            self.ids.aniamtion3D.clear_widgets()
+            plot_3d_skeleton(data[0], ax, i,'black')
+            plot_3d_skeleton(data[1], ax, i,'red')
+            figure.canvas.draw()
+            figure.canvas.flush_events()
+            ax.clear()
+            ax.set_xlabel('X')
+            ax.set_xlim(-2.5, 1)
+            ax.set_ylabel('Y')
+            ax.set_ylim(-2.5, 1)
+            ax.set_zlabel('Z')
+            ax.set_zlim(0, 1)
+            xx = FigureCanvas(figure)
+            graph_3d = self.ids.aniamtion3D
+            graph_3d.add_widget(xx)
+
+
+        # plot_x_t = FigureCanvas(figure)
+    
+
 
 class App2(App):
     def build(self):

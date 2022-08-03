@@ -57,9 +57,9 @@ ax.set_zlim(0, 1)
 
 plt.ion()
 
-for i in range(frame,frame+3000,5):
+for i in range(frame,frame+3000,10):
     plot_3d_skeleton(pos_walk_1,ax,i,'black')
-    plot_3d_skeleton(pos_walk_2, ax, i,'red')
+    # plot_3d_skeleton(pos_walk_2, ax, i,'red')
     figure.canvas.draw()
     figure.canvas.flush_events()
     ax.clear()
