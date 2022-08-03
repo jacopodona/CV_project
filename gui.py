@@ -236,9 +236,6 @@ class MyLayout(TabbedPanel):
 
             MyLayout.color_count += 1             
 
-            MyLayout.spinner.append(os.path.basename(MyLayout.file_name))
-            self.ids.sel_anim1.values = MyLayout.spinner
-            self.ids.sel_anim2.values = MyLayout.spinner
 
 
     def clear_data(self):
@@ -248,6 +245,7 @@ class MyLayout(TabbedPanel):
         self.ids.graph_y.clear_widgets()
         self.ids.graph_z.clear_widgets()
         self.ids.graph_xyz.clear_widgets()
+        self.ids.graph_3d.clear_widgets()
 
         # self.ids.file_manager.clear_widgets()
         MyLayout.color_count = 0
@@ -880,7 +878,7 @@ class MyLayout(TabbedPanel):
 
 
     def plot_3d(self, selc_joints, legend, take):
-        fig_3d = self.ids.graph_3d.clear_widgets()
+        self.ids.graph_3d.clear_widgets()
         fig_3d = plt.figure(figsize=(8, 4))
         ax = fig_3d.add_subplot(111, projection='3d')
         
@@ -1059,7 +1057,13 @@ class MyLayout(TabbedPanel):
     def animations(self, data):
         fig = plt.figure(figsize=(8,4))
         ax = plt.axes(projection='3d')
-        
+
+        dir = os.path.dirname(__file__)
+        run_1 = os.path.join(dir, 'data/Dona_corsa.csv')
+        take_run_1 = csv.Take().readCSV(run_1)
+        bodies_run_1 = take_run_1.rigid_bodies
+        pos_run_1 = old_get_bone_pos(bodies_run_1, take_run_1)
+
         ax.set_xlim(-2.5, 1)
         ax.set_ylim(-2.5, 1)
         ax.set_zlim(0, 1)
@@ -1067,10 +1071,10 @@ class MyLayout(TabbedPanel):
         ax.set_ylabel("y")
         ax.set_zlabel("z")
         ax.set_title("3D animation of lower body")
-        
 
         plt.ion()
         frame = 0
+        data[0]=pos_run_1
         for i in range(frame,frame+2000,10):
             #self.ids.animation3d.clear_widgets()
             plot_3d_skeleton(data[0], ax, i,'black')
@@ -1096,3 +1100,4 @@ class App2(App):
 
 if __name__ == "__main__":
     App2().run()
+    plt.plot([],[])
