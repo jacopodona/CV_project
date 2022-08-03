@@ -1051,12 +1051,6 @@ class MyLayout(TabbedPanel):
 
         MyLayout.aniamtions(self, pos_joint)
 
-    #### da cambiaree
-    def init_anim():
-        pass
-    def animate(i):
-        pass
-
 
     def aniamtions(self, data):
         fig = plt.figure(figsize=(8,4))
@@ -1070,8 +1064,6 @@ class MyLayout(TabbedPanel):
         ax.set_zlabel("z")
         ax.set_title("3D animation of lower body")
         
-        anim = animation.FuncAnimation(fig, MyLayout.animate, init_func = MyLayout.init_anim,
-                               frames=100, interval=20, blit=True)
 
         plt.ion()
         frame = 0
@@ -1079,8 +1071,8 @@ class MyLayout(TabbedPanel):
             self.ids.aniamtion3D.clear_widgets()
             plot_3d_skeleton(data[0], ax, i,'black')
             plot_3d_skeleton(data[1], ax, i,'red')
-            figure.canvas.draw()
-            figure.canvas.flush_events()
+            fig.canvas.draw()
+            fig.canvas.flush_events()
             ax.clear()
             ax.set_xlabel('X')
             ax.set_xlim(-2.5, 1)
@@ -1088,12 +1080,8 @@ class MyLayout(TabbedPanel):
             ax.set_ylim(-2.5, 1)
             ax.set_zlabel('Z')
             ax.set_zlim(0, 1)
-            xx = FigureCanvas(figure)
-            graph_3d = self.ids.aniamtion3D
-            graph_3d.add_widget(xx)
+            plt.show()
 
-
-        # plot_x_t = FigureCanvas(figure)
     
 
 

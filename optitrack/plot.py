@@ -128,12 +128,12 @@ def plot_3d_joints(joints, ax, frame):
             ax.scatter(joints[i][frame][2], joints[i][frame][0], joints[i][frame][1])
 
 
-def plot_3d_line(ax,first,second,color):
+def plot_3d_line(ax, first, second,color):
     #Plots a 3d line between 3d points
     x=[first[2],second[2]]
     y=[first[0],second[0]]
     z=[first[1], second[1]]
-    ax.plot(x,y,z,color)
+    ax.plot3D(x,y,z,color)
 
 
 def plot_3d_skeleton(joints,ax,frame,color):
