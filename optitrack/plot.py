@@ -123,7 +123,8 @@ def plot_3d_joints(joints, ax, frame):
     if(joints[0][frame]!= None):
         ax.scatter(joints[0][frame][2], joints[0][frame][0], joints[0][frame][1])
     #plot the lower body
-    for i in range(1, len(joints)):#Plot all lower body
+    points_of_interest=[0,13,14,15,16,17,18,19,20]#joints id of hip and lower body
+    for i in points_of_interest:#Plot all lower body
         if(joints[i][frame]!=None):
             ax.scatter(joints[i][frame][2], joints[i][frame][0], joints[i][frame][1])
 
@@ -140,10 +141,7 @@ def plot_3d_skeleton(joints,ax,frame,color):
     #Plot all points
         plot_3d_joints(joints, ax, frame)
         #Plot edge connections
-        # body_edges = [[0, 1], [0, 13], [13, 14], [14, 15],[0, 16], [16, 17], [17, 18], [18, 20], [15, 19]]
-        # body_edges = [[0, 13], [13, 14], [14, 15],[0, 16], [16, 17], [17, 18], [18, 20], [15, 19]]
-
-        body_edges = [[0, 1], [1, 2], [2, 3], [0, 4], [4, 5], [5, 6], [6, 8], [3, 7]]
+        body_edges = [[0, 1], [0, 13], [13, 14], [14, 15],[0, 16], [16, 17], [17, 18], [18, 20], [15, 19]]
         for joint1,joint2 in body_edges:
             if (joints[joint1][frame]!=None and joints[joint2][frame]!=None):
                 plot_3d_line(ax,joints[joint1][frame],joints[joint2][frame],color)

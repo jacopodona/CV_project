@@ -459,6 +459,11 @@ class MyLayout(TabbedPanel):
         pos = get_bone_pos(body, take)
         return take, pos
 
+    def compute_pos_3d(self):
+        take = csv.Take().readCSV(MyLayout.file_name)
+        body = take.rigid_bodies
+        pos = get_bone_pos(body, take)
+        return take, pos
 
     def text_file_plt(self):
         count = 0
@@ -904,7 +909,6 @@ class MyLayout(TabbedPanel):
         MyLayout.text_file_plt(self)
 
         if MyLayout.data_path:
-            #if self.ids.multi_graph.text == "[b]Enable multiple\nfile joint[/b]":
             joints = [self.ids.hip_check_3d.active,
                       self.ids.l_thigh_check_3d.active,
                       self.ids.l_shin_check_3d.active,
@@ -922,7 +926,7 @@ class MyLayout(TabbedPanel):
             MyLayout.set_joint_color_3d(self, joints)
 
             # Compute position
-            take, pos_joint = MyLayout.compute_pos(self)
+            take, pos_joint = MyLayout.compute_pos_3d(self)
 
             # Select joints
             selc_joints, legend = get_joints(pos_joint, joints, MyLayout.legend)
@@ -1018,7 +1022,7 @@ class MyLayout(TabbedPanel):
 
     def save_animation(self):
         MyLayout.save_plt = True
-        MyLayout.aniamtion(self)
+        MyLayout.animation(self)
         MyLayout.save_plt = False
 
 
@@ -1049,10 +1053,10 @@ class MyLayout(TabbedPanel):
             take.append(take_tmp)
             pos_joint.append(pos_joint_tmp)
 
-        MyLayout.aniamtions(self, pos_joint)
+        MyLayout.animations(self, pos_joint)
 
 
-    def aniamtions(self, data):
+    def animations(self, data):
         fig = plt.figure(figsize=(8,4))
         ax = plt.axes(projection='3d')
         
@@ -1068,9 +1072,9 @@ class MyLayout(TabbedPanel):
         plt.ion()
         frame = 0
         for i in range(frame,frame+2000,10):
-            self.ids.aniamtion3D.clear_widgets()
+            #self.ids.animation3d.clear_widgets()
             plot_3d_skeleton(data[0], ax, i,'black')
-            plot_3d_skeleton(data[1], ax, i,'red')
+            #plot_3d_skeleton(data[1], ax, i,'red')
             fig.canvas.draw()
             fig.canvas.flush_events()
             ax.clear()
