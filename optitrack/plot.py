@@ -133,7 +133,7 @@ def plot_3d_line(ax, first, second,color):
     x=[first[2],second[2]]
     y=[first[0],second[0]]
     z=[first[1], second[1]]
-    ax.plot3D(x,y,z,color)
+    ax.plot(x,y,z,color)
 
 
 def plot_3d_skeleton(joints,ax,frame,color):
