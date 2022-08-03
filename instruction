@@ -1,0 +1,39 @@
+################################################################################################################
+#### SETUP ####
+# Ubuntu
+Install kivy by following the instruction on:	 https://kivy.org/doc/stable/installation/installation-linux.html
+Install kivy garden
+
+
+# Window
+
+
+
+
+1- Run the exe file
+
+#### Load data ####
+2- Search the .csv file and load up to 9 files
+
+#### 2D ####
+3- Choose the file from the left
+4- Select from the right the parts of the body
+4- Plot from the relative button
+5- Change the middle graph by select the plane from the window in the bottom left
+
+6- To make comparison click "enable multiple file"
+7- Choose the part of the body
+8- Choose all the file for the comparison
+9- Plot the data
+
+10- From the slider select the max frame then Plot the data
+11- To enble the graph auto-update click on the relative button
+12- Save the Plot with the "save plot" button 
+
+#### 3D ####
+13- Choose the file from the 2D tab
+14- Choose the body part
+15- Plot the data
+16- Save the plots
+
+####  ANIMATION ####

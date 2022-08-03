@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 from optitrack.geometry import *
 
 
-###----- INITIALIZATION ------###
+#######################################----- INITIALIZATION ------#######################################
 #
-# get choosed joint
+# Select choosen joint from the 21 body parts
 #
 def get_joints(array, joints, legend):
     tmp = []
@@ -28,26 +28,16 @@ def get_bone_pos(bodies, take):
         for body in bodies: 
             bones = take.rigid_bodies[body]
             bones_pos.append(bones.positions)   # take position of each body part
-    bones_pos = [ bones_pos[i] for i in b]
+    bones_pos = [bones_pos[i] for i in b]
     return bones_pos
 
-def old_get_bone_pos(bodies, take):
-#
-# Get the marker positions from the bodies and the time stamp
-#
-    bones_pos = []
-    if len(bodies) > 0:
-        for body in bodies:
-            bones = take.rigid_bodies[body]
-            bones_pos.append(bones.positions)   # take position of each body part
-    return bones_pos
 
 def get_marker_path(bones_pos, marker, take):
 #
-# take the positions of all the marker and
+# Take the positions of all the marker and
 # extract only the chosen one
 #
-    # remove NoneType object
+    # remove NoneType object (Truncation)
     lambda_obj = lambda x: (x is not None)
     tmp = list(filter(lambda_obj, bones_pos[marker]))
 
@@ -59,13 +49,13 @@ def get_marker_path(bones_pos, marker, take):
     time = np.arange(0, (len(path[0])*sample) - sample/2, sample)
     return [path[2], path[0], path[1]], time        # reorder the points in [x, y, z] from [y, z, x]
 
-###----- PATH PLOT ------###
+#######################################----- PATH PLOT -----#######################################
 
 def plot_marker_path_2D(marker_pos, ax, frame, plot = "xy"):
 #
 #   plot marker path on planes: "xy" - "xz" - "yz"
 #   
-    start = 100
+    start = 100     # start after 100 frame to reduce initial noise
     if plot == "xz":
         ax.plot(marker_pos[0][start:frame], marker_pos[2][start:frame])
     if plot == "yz":
@@ -79,16 +69,10 @@ def plot_marker_path_3D(marker_pos, ax, frame = "none"):
 #   plot 3D path
 #   plot is parametric with numeber of frame selected 
 #
-    ax.plot3D(marker_pos[0][0:frame],marker_pos[1][0:frame], marker_pos[2][0:frame])#x,y,z
-    """if frame == "none":
-        frame = len(marker_pos[0])
-    if frame <= len(marker_pos[0]) or frame <= (len(marker_pos[0])+5):#allows printing of joints that have small amount of missing frames positions
-        ax.plot3D(marker_pos[0][0:frame],marker_pos[1][0:frame], marker_pos[2][0:frame])#x,y,z"""
-    # else:
-    #     print("frame selected out of bound, max number is: ", len(marker_pos[0]))
+    ax.plot3D(marker_pos[0][0:frame],marker_pos[1][0:frame], marker_pos[2][0:frame])
         
 
-###----- TRAJECTORY PLOT ------###
+#######################################----- TRAJECTORY PLOT -----#######################################
 
 def plot_marker_traj(marker_pos, t, ax, frame, label = "x", reverse_axis = False):
 #
@@ -113,34 +97,39 @@ def plot_marker_traj(marker_pos, t, ax, frame, label = "x", reverse_axis = False
         if label=="z":
             ax.plot(t[start:frame], marker_pos[2][start:frame])
 
+#######################################----- 3D SKELETON -----#######################################
 
 def plot_3d_joints(joints, ax, frame):
 #
-#   plot 3D point at frame istance t
-#   plot is parametric with frame istance
+#   Plot 3D point plot is parametric with frame istance
 #
-    #plot the hip
+    # plot the hip
     if(joints[0][frame]!= None):
         ax.scatter(joints[0][frame][2], joints[0][frame][0], joints[0][frame][1])
-    #plot the lower body
-    points_of_interest=[0,13,14,15,16,17,18,19,20]#joints id of hip and lower body
-    for i in points_of_interest:#Plot all lower body
-        if(joints[i][frame]!=None):
+
+    # plot the lower body
+    points_of_interest=[0,13,14,15,16,17,18,19,20]  # joints id of hip and lower body
+    for i in points_of_interest:    # Plot all lower body
+        if(joints[i][frame] != None):
             ax.scatter(joints[i][frame][2], joints[i][frame][0], joints[i][frame][1])
 
 
-def plot_3d_line(ax, first, second,color):
-    #Plots a 3d line between 3d points
-    x=[first[2],second[2]]
-    y=[first[0],second[0]]
+def plot_3d_line(ax, first, second, color):
+#
+# Plots a 3d line between two 3d points
+#
+    x=[first[2], second[2]]
+    y=[first[0], second[0]]
     z=[first[1], second[1]]
-    ax.plot(x,y,z,color)
+    ax.plot(x, y, z, color)
 
 
-def plot_3d_skeleton(joints,ax,frame,color):
-    #Plot all points
+def plot_3d_skeleton(joints, ax, frame, color):
+    #
+    # Plot all points
+    #
         plot_3d_joints(joints, ax, frame)
-        #Plot edge connections
+        # Plot edge connections
         body_edges = [[0, 1], [0, 13], [13, 14], [14, 15],[0, 16], [16, 17], [17, 18], [18, 20], [15, 19]]
         for joint1,joint2 in body_edges:
             if (joints[joint1][frame]!=None and joints[joint2][frame]!=None):
