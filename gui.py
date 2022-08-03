@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import os
 from optitrack.plot import *
 import optitrack.csv_reader as csv
+from datetime import datetime
 from optitrack.geometry import *
 from matplotlib import animation, rc
 
@@ -28,6 +29,15 @@ colors = ["indianred", "forestgreen", "royalblue",
 
 matplotlib.rcParams['axes.prop_cycle'] = matplotlib.cycler(
                                     color=colors)
+
+
+def getTimestamp():
+    # Getting the current date and time
+    dt = datetime.now()
+    # getting the timestamp
+    ts = str(datetime.timestamp(dt))
+    ts=ts.replace('.','_')
+    return ts
 
 
 class MyLayout(TabbedPanel):
@@ -551,7 +561,7 @@ class MyLayout(TabbedPanel):
         ax.set_ylabel("x")
         ax.set_title("Evolution of x(t) for multiple body part")
         if MyLayout.save_plt:
-            my_file = 'x_t take.png'
+            my_file = 'x_t take_'+getTimestamp()+'.png'
             fig_x.savefig(os.path.join(MyLayout.my_path, my_file))
         plot_x_t = FigureCanvas(fig_x)
         graph_x = self.ids.graph_x
@@ -571,7 +581,7 @@ class MyLayout(TabbedPanel):
         ax_sJoint.set_ylabel("x")
         ax_sJoint.set_title(f"Evolution of x(t) for multiple files [{self.ids.spinner_joint.text}]")
         if MyLayout.save_plt:
-            my_file = f'x_t_{select_joint} take.png'
+            my_file = f'x_t_{select_joint} take_'+getTimestamp()+'.png'
             fig_x_sJoint.savefig(os.path.join(MyLayout.my_path, my_file))
         plot_x_t_sJoint = FigureCanvas(fig_x_sJoint)
         graph_x = self.ids.graph_x
@@ -597,7 +607,7 @@ class MyLayout(TabbedPanel):
         ay.invert_xaxis()
         ay.invert_yaxis()
         if MyLayout.save_plt:
-            my_file = 'y_t take.png'
+            my_file = 'y_t take_'+getTimestamp()+'.png'
             fig_y.savefig(os.path.join(MyLayout.my_path, my_file))
         plot_y_t = FigureCanvas(fig_y)
         graph_y = self.ids.graph_y
@@ -621,7 +631,7 @@ class MyLayout(TabbedPanel):
         ay_sJoint.invert_yaxis()
         ay_sJoint.set_title(f"Evolution of y(t) for multiple files [{self.ids.spinner_joint.text}]")
         if MyLayout.save_plt:
-            my_file = f'y_t_{select_joint} take.png'
+            my_file = f'y_t_{select_joint} take_'+getTimestamp()+'.png'
             fig_y_sJoint.savefig(os.path.join(MyLayout.my_path, my_file))
         plot_y_t_sJoint = FigureCanvas(fig_y_sJoint)
         graph_y = self.ids.graph_y
@@ -642,7 +652,7 @@ class MyLayout(TabbedPanel):
         az.set_ylabel("z")
         az.set_title("Evolution of z(t) for multiple body part")
         if MyLayout.save_plt:
-            my_file = 'z_t take.png'
+            my_file = 'z_t take_'+getTimestamp()+'.png'
             fig_z.savefig(os.path.join(MyLayout.my_path, my_file))
         plot_z_t = FigureCanvas(fig_z)
         graph_z = self.ids.graph_z
@@ -662,7 +672,7 @@ class MyLayout(TabbedPanel):
         az_sJoint.set_ylabel("z")
         az_sJoint.set_title(f"Evolution of z(t) for multiple files [{self.ids.spinner_joint.text}]")
         if MyLayout.save_plt:
-            my_file = f'z_t_{select_joint} take.png'
+            my_file = f'z_t_{select_joint} take_'+getTimestamp()+'.png'
             fig_z_sJoint.savefig(os.path.join(MyLayout.my_path, my_file))
         plot_z_t_sJoint = FigureCanvas(fig_z_sJoint)
         graph_z = self.ids.graph_z
@@ -685,7 +695,7 @@ class MyLayout(TabbedPanel):
             axyz.set_ylabel("z")
             axyz.set_title("Evolution on X-Z plane for multiple body part")
             if MyLayout.save_plt:
-                my_file = 'x_z take.png'
+                my_file = 'x_z take_'+getTimestamp()+'.png'
                 fig_xyz.savefig(os.path.join(MyLayout.my_path, my_file))
 
             plot_xyz = FigureCanvas(fig_xyz)
@@ -707,7 +717,7 @@ class MyLayout(TabbedPanel):
             axyz.set_ylabel("y")
             axyz.set_title("Evolution on X-Y plane for multiple body part")
             if MyLayout.save_plt:
-                my_file = 'x_y take.png'
+                my_file = 'x_y_take_'+getTimestamp()+'.png'
                 fig_xyz.savefig(os.path.join(MyLayout.my_path, my_file))
             plot_xyz = FigureCanvas(fig_xyz)
             graph_xyz = self.ids.graph_xyz
@@ -727,7 +737,7 @@ class MyLayout(TabbedPanel):
             axyz.set_ylabel("z")
             axyz.set_title("Evolution on Y-Z plane for multiple body part")
             if MyLayout.save_plt:
-                my_file = 'y_z take.png'
+                my_file = 'y_z take_'+getTimestamp()+'.png'
                 fig_xyz.savefig(os.path.join(MyLayout.my_path, my_file))
             plot_xyz = FigureCanvas(fig_xyz)
             graph_xyz = self.ids.graph_xyz
@@ -751,7 +761,7 @@ class MyLayout(TabbedPanel):
             axyz_sJoint.set_ylabel("z")
             axyz_sJoint.set_title(f"Evolution on X-Z plane for multiple files [{self.ids.spinner_joint.text}]")
             if MyLayout.save_plt:
-                my_file = f'x_z_{select_joint} take.png'
+                my_file = f'x_z_{select_joint} take_'+getTimestamp()+'.png'
                 fig_xyz_sJoint.savefig(os.path.join(MyLayout.my_path, my_file))
             plot_xyz_sJoint = FigureCanvas(fig_xyz_sJoint)
             graph_xyz = self.ids.graph_xyz
@@ -773,7 +783,7 @@ class MyLayout(TabbedPanel):
             axyz_sJoint.set_ylabel("y")
             axyz_sJoint.set_title(f"Evolution on X-Y plane for multiple files [{self.ids.spinner_joint.text}]")
             if MyLayout.save_plt:
-                my_file = f'x_y_{select_joint} take.png'
+                my_file = f'x_y_{select_joint} take_'+getTimestamp()+'.png'
                 fig_xyz_sJoint.savefig(os.path.join(MyLayout.my_path, my_file))
             plot_xyz_sJoint = FigureCanvas(fig_xyz_sJoint)
             graph_xyz = self.ids.graph_xyz
@@ -794,7 +804,7 @@ class MyLayout(TabbedPanel):
             axyz_sJoint.set_ylabel("z")
             axyz_sJoint.set_title(f"Evolution on Y-Z plane for multiple files [{self.ids.spinner_joint.text}]")
             if MyLayout.save_plt:
-                my_file = f'y_z_{select_joint} take.png'
+                my_file = f'y_z_{select_joint} take_'+getTimestamp()+'.png'
                 fig_xyz_sJoint.savefig(os.path.join(MyLayout.my_path, my_file))
             plot_xyz_sJoint = FigureCanvas(fig_xyz_sJoint)
             graph_xyz = self.ids.graph_xyz
@@ -892,7 +902,8 @@ class MyLayout(TabbedPanel):
         ax.set_ylabel("y")
         ax.set_zlabel("z")
         if MyLayout.save_plt:
-            my_file = '3D take.png'
+
+            my_file = '3D take_'+getTimestamp()+'.png'
             fig_3d.savefig(os.path.join(MyLayout.my_path, my_file))
 
         plot_3d_Joint = FigureCanvas(fig_3d)
@@ -1017,78 +1028,6 @@ class MyLayout(TabbedPanel):
         if MyLayout.slider:
             MyLayout.plot_all_3d(self)
 
-
-    def save_animation(self):
-        MyLayout.save_plt = True
-        MyLayout.animation(self)
-        MyLayout.save_plt = False
-
-
-    def select_data_path_from_spinner(self):
-        for i in MyLayout.data_path:
-            if self.ids.sel_anim1.text in i:
-                MyLayout.data_path_anim.append(i)
-            if self.ids.sel_anim2.text in i:
-                MyLayout.data_path_anim.append(i)
-        
-
-    def plot_animation(self):
-
-        MyLayout.data_path_anim.clear()
-        take = []
-        pos_joint = []
-
-
-        MyLayout.select_data_path_from_spinner(self)
-        if len(MyLayout.data_path_anim) == 0:
-            self.ids.f_label_zero.background_color[3] = 0.4
-            MyLayout.select_data_path_from_file(self)
-
-        # Get data path
-        for i in MyLayout.data_path_anim:
-            MyLayout.file_name = i
-            take_tmp, pos_joint_tmp = MyLayout.compute_pos(self)
-            take.append(take_tmp)
-            pos_joint.append(pos_joint_tmp)
-
-        MyLayout.animations(self, pos_joint)
-
-
-    def animations(self, data):
-        fig = plt.figure(figsize=(8,4))
-        ax = plt.axes(projection='3d')
-
-        dir = os.path.dirname(__file__)
-        run_1 = os.path.join(dir, 'data/Dona_corsa.csv')
-        take_run_1 = csv.Take().readCSV(run_1)
-        bodies_run_1 = take_run_1.rigid_bodies
-        pos_run_1 = old_get_bone_pos(bodies_run_1, take_run_1)
-
-        ax.set_xlim(-2.5, 1)
-        ax.set_ylim(-2.5, 1)
-        ax.set_zlim(0, 1)
-        ax.set_xlabel("x")
-        ax.set_ylabel("y")
-        ax.set_zlabel("z")
-        ax.set_title("3D animation of lower body")
-
-        plt.ion()
-        frame = 0
-        data[0]=pos_run_1
-        for i in range(frame,frame+2000,10):
-            #self.ids.animation3d.clear_widgets()
-            plot_3d_skeleton(data[0], ax, i,'black')
-            #plot_3d_skeleton(data[1], ax, i,'red')
-            fig.canvas.draw()
-            fig.canvas.flush_events()
-            ax.clear()
-            ax.set_xlabel('X')
-            ax.set_xlim(-2.5, 1)
-            ax.set_ylabel('Y')
-            ax.set_ylim(-2.5, 1)
-            ax.set_zlabel('Z')
-            ax.set_zlim(0, 1)
-            plt.show()
 
     
 
