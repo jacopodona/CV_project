@@ -1,5 +1,6 @@
 # CV_project
-The repository contains the Computer Vision project done by Jacopo Donà and Leonardo Fornalè
+The repository contains the Computer Vision project done by Jacopo Donà and Leonardo Fornalè.
+
 The following repository contains two separate projects:
  -	guy.py
 	 - Displays a graphical user interface with plots of 2D and 3D trajectories of takes
