@@ -19,16 +19,16 @@ def loadData(take):
 
     #run
     bodies = take.rigid_bodies
-    positions = old_get_bone_pos(bodies, take)#contiene 21 liste (per ogni joint) che contiene per ogni frame le posizioni x,y,z
+    positions = get_joint_pos(bodies, take)#contiene 21 liste (per ogni joint) che contiene per ogni frame le posizioni x,y,z
 
     plot_take(positions)
 
 def loadMultipleData(take1, take2,name1,name2):
     bodies1 = take1.rigid_bodies
-    positions1 = old_get_bone_pos(bodies1,take1)  # contiene 21 liste (per ogni joint) che contiene per ogni frame le posizioni x,y,z
+    positions1 = get_joint_pos(bodies1,take1)  # contiene 21 liste (per ogni joint) che contiene per ogni frame le posizioni x,y,z
 
     bodies2 = take2.rigid_bodies
-    positions2 = old_get_bone_pos(bodies2,take2)  # contiene 21 liste (per ogni joint) che contiene per ogni frame le posizioni x,y,z
+    positions2 = get_joint_pos(bodies2,take2)  # contiene 21 liste (per ogni joint) che contiene per ogni frame le posizioni x,y,z
 
     plot_takes(positions1,positions2,name1,name2)
 
@@ -45,6 +45,7 @@ def plot_take(take):
     ax.set_ylim(-2.5, 2.5)
     ax.set_zlabel('Z')
     ax.set_zlim(0, 1.2)
+    ax.set_title("Skeleton take animation")
 
     plt.ion()
 
@@ -61,6 +62,7 @@ def plot_take(take):
         ax.set_ylim(-2.5, 2.5)
         ax.set_zlabel('Z')
         ax.set_zlim(0, 1.2)
+        ax.set_title("Skeleton take animation")
         plt.show()
 
 def plot_takes(take1,take2,name1,name2):
@@ -75,6 +77,7 @@ def plot_takes(take1,take2,name1,name2):
     ax.set_ylim(-2.5, 2.5)
     ax.set_zlabel('Z')
     ax.set_zlim(0, 1.2)
+    ax.set_title("Multiple skeletons take animation")
 
     legend_elements = [Line2D([0], [0], color='black', lw=4, label=name1),
                        Line2D([0], [0], color='red', lw=4, label=name2)]
@@ -93,6 +96,7 @@ def plot_takes(take1,take2,name1,name2):
         ax.set_ylim(-2.5, 2.5)
         ax.set_zlabel('Z')
         ax.set_zlim(0, 1.2)
+        ax.set_title("Multiple skeletons take animation")
         ax.legend(handles=legend_elements)
         plt.show()
     plt.close()
@@ -111,15 +115,15 @@ def sampleRun():
 
     # run
     bodies_run_1 = take_run_1.rigid_bodies
-    pos_run_1 = old_get_bone_pos(bodies_run_1, take_run_1)
+    pos_run_1 = get_joint_pos(bodies_run_1, take_run_1)
 
     # walk
     bodies_walk_1 = take_walk_1.rigid_bodies
-    pos_walk_1 = old_get_bone_pos(bodies_walk_1,
+    pos_walk_1 = get_joint_pos(bodies_walk_1,
                                   take_walk_1)  # contiene 21 liste (per ogni joint) che contiene per ogni frame le posizioni x,y,z
 
     bodies_walk_2 = take_walk_2.rigid_bodies
-    pos_walk_2 = old_get_bone_pos(bodies_walk_2,
+    pos_walk_2 = get_joint_pos(bodies_walk_2,
                                   take_walk_2)  # contiene 21 liste (per ogni joint) che contiene per ogni frame le posizioni x,y,z
 
     # plot_take(pos_walk_1)
