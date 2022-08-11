@@ -1149,6 +1149,7 @@ class MyLayout(TabbedPanel):
 class App2(App):
     def build(self):
         Window.clearcolor = (1, 237/255, 237/255, 1)
+        self.title = 'Gait Analysis'
         return MyLayout()
 
 if __name__ == "__main__":
